@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Jelly.Database>
+  <log>
+    <errorLog enabled="true|false" path="Log/DatabaseErrorLog/DatabaseLog_{pattern}.log" dataTimePattern="yyyyMMdd" />
+    <infoLog enabled="true|false" path="Log/DatabaseInfoLog/DatabaseLog_{pattern}.log" dataTimePattern="yyyyMMdd" />
+  </log>
+</Jelly.Database>
