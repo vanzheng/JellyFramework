@@ -9,7 +9,7 @@
     <ProjectGuid>{C20282F2-C21D-48E2-B172-95E184FC8F04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jelly.Core.Tests</RootNamespace>
+    <RootNamespace>Jelly.Tests</RootNamespace>
     <AssemblyName>Jelly.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

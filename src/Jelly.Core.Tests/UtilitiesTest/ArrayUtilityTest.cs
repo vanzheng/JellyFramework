@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Jelly.Utilities;
 
-namespace Jelly.Core.Tests.UtilitiesTest
+namespace Jelly.Tests.UtilitiesTest
 {
     [TestClass]
     public class ArrayUtilityTest
