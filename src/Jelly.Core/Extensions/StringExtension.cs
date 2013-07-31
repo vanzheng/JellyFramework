@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace Jelly.Extensions
 {
@@ -11,36 +12,60 @@ namespace Jelly.Extensions
         /// <summary>
         /// Formats bytes string.
         /// </summary>
-        public static string FormatBytesStr(this string str, int bytes, string formatter)
+        public static string FormatBytes(this string str, string formatter, object bytes)
         {
-            if (bytes < 0) 
+            if (bytes == null) 
             {
-                throw new Exception("The parameter bytes can not less than 0.");    
+                throw new ArgumentNullException("bytes");
             }
 
-            int k = 1024,
-                m = 1024 * 1024,
-                g = 1024 * 1024 * 1024;
+            if (bytes is Byte ||
+                bytes is SByte ||
+                bytes is Int16 ||
+                bytes is UInt16 ||
+                bytes is Int32 ||
+                bytes is UInt32 ||
+                bytes is Int64 ||
+                bytes is UInt64)
+            {
 
-            if (bytes >= g)
-            {
-                return ((double)(bytes / g)).ToString(formatter) + "G";
-            }
-            if (bytes >= m)
-            {
-                return ((double)(bytes / m)).ToString(formatter) + "M";
-            }
-            if (bytes >= k)
-            {
-                return ((double)(bytes / k)).ToString(formatter) + "K";
-            }
+                double size = Convert.ToDouble(bytes, CultureInfo.CurrentCulture);
 
-            return bytes.ToString() + "B";
+                if (size < 0)
+                {
+                    throw new Exception("The byte size less than 0, can not format.");
+                }
+
+                if (size >= 0 && size < Constants.Kilobyte)
+                {
+                    return string.Concat(size.ToString("#"), "B");
+                }
+                else if (size >= Constants.Kilobyte && size < Constants.Megabyte)
+                {
+                    return string.Concat((size / Constants.Kilobyte).ToString("#"), "KB");
+                }
+                else if (size >= Constants.Megabyte && size < Constants.Gigabyte)
+                {
+                    return string.Concat((size / Constants.Megabyte).ToString(formatter), "MB");
+                }
+                else if (size >= Constants.Gigabyte && size < Constants.Terabyte)
+                {
+                    return string.Concat((size / Constants.Gigabyte).ToString(formatter), "GB");
+                }
+                else
+                {
+                    return string.Concat((size / Constants.Terabyte).ToString(formatter), "TB");
+                }
+            }
+            else 
+            {
+                throw new Exception("The given arg data type is not Byte, sbyte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64");
+            }
         }
 
-        public static string FormatBytesStr(this string str, int bytes) 
+        public static string FormatBytes(this string str, int bytes) 
         {
-            return FormatBytesStr(str, bytes, "0.00");
+            return FormatBytes(str, "#.#", bytes);
         }
 
         /// <summary>

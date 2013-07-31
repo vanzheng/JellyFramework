@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Extensions\DbDataReaderExtension.cs" />
     <Compile Include="Utilities\ArrayUtility.cs" />
     <Compile Include="Caching\CacheManager.cs" />
