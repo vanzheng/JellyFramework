@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using Jelly.Utilities;
 
@@ -11,70 +10,11 @@ namespace Jelly.Extensions
     public static class StringExtension
     {
         /// <summary>
-        /// Formats bytes string.
-        /// </summary>
-        public static string FormatBytes(this string str, string formatter, object bytes)
-        {
-            if (bytes == null) 
-            {
-                throw new ArgumentNullException("bytes");
-            }
-
-            if (bytes is Byte ||
-                bytes is SByte ||
-                bytes is Int16 ||
-                bytes is UInt16 ||
-                bytes is Int32 ||
-                bytes is UInt32 ||
-                bytes is Int64 ||
-                bytes is UInt64)
-            {
-
-                double size = Convert.ToDouble(bytes, CultureInfo.CurrentCulture);
-
-                if (size < 0)
-                {
-                    throw new Exception("The byte size less than 0, can not format.");
-                }
-
-                if (size >= 0 && size < Constants.Kilobyte)
-                {
-                    return string.Concat(size.ToString("#"), "B");
-                }
-                else if (size >= Constants.Kilobyte && size < Constants.Megabyte)
-                {
-                    return string.Concat((size / Constants.Kilobyte).ToString("#"), "KB");
-                }
-                else if (size >= Constants.Megabyte && size < Constants.Gigabyte)
-                {
-                    return string.Concat((size / Constants.Megabyte).ToString(formatter), "MB");
-                }
-                else if (size >= Constants.Gigabyte && size < Constants.Terabyte)
-                {
-                    return string.Concat((size / Constants.Gigabyte).ToString(formatter), "GB");
-                }
-                else
-                {
-                    return string.Concat((size / Constants.Terabyte).ToString(formatter), "TB");
-                }
-            }
-            else 
-            {
-                throw new Exception("The given arg data type is not Byte, sbyte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64");
-            }
-        }
-
-        public static string FormatBytes(this string str, int bytes) 
-        {
-            return FormatBytes(str, "#.#", bytes);
-        }
-
-        /// <summary>
         /// 将全角数字转换为数字
         /// </summary>
         /// <param name="SBCCase"></param>
         /// <returns></returns>
-        public static string SBCCaseToNumberic(this string str, string SBCCase)
+        public static string SBCCaseToNumberic(this string SBCCase)
         {
             char[] c = SBCCase.ToCharArray();
             for (int i = 0; i < c.Length; i++)
@@ -99,9 +39,9 @@ namespace Jelly.Extensions
         /// <param name="s">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
         /// <returns></returns>
-        public static string Truncate(this string str, string s, int maximumLength)
+        public static string Truncate(this string s, int maximumLength)
         {
-            return Truncate(str, s, maximumLength, "...");
+            return Truncate(s, maximumLength, "...");
         }
 
         /// <summary>
@@ -111,7 +51,7 @@ namespace Jelly.Extensions
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
         /// <param name="suffix">The suffix to place at the end of the truncated string.</param>
         /// <returns></returns>
-        public static string Truncate(this string str, string s, int maximumLength, string suffix)
+        public static string Truncate(this string s, int maximumLength, string suffix)
         {
             if (suffix == null)
             {

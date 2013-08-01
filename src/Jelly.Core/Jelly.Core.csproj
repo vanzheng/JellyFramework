@@ -58,6 +58,7 @@
     <Compile Include="Caching\ICacheDependency.cs" />
     <Compile Include="Utilities\CopyUtility.cs" />
     <Compile Include="Utilities\ExceptionManager.cs" />
+    <Compile Include="Utilities\Formatter.cs" />
     <Compile Include="Utilities\IOUtility.cs" />
     <Compile Include="Encryption\Base64.cs" />
     <Compile Include="Encryption\DES.cs" />
