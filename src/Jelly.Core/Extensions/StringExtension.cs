@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using Jelly.Utilities;
 
 namespace Jelly.Extensions
 {
@@ -199,6 +200,23 @@ namespace Jelly.Extensions
             }
 
             return str;
+        }
+
+        public static bool IsLastWord(this string input, string lastWord)
+        {
+            ExceptionManager.ThrowIfNull(input, "input");
+            ExceptionManager.ThrowIfNull(lastWord, "lastWord");
+
+            int wordLength = lastWord.Length;
+            return input.LastIndexOf(lastWord) == input.Length - wordLength;
+        }
+
+        public static bool IsLastWord(this string input, char lastWord)
+        {
+            ExceptionManager.ThrowIfNull(input, "input");
+            ExceptionManager.ThrowIfNull(lastWord, "lastWord");
+
+            return input.LastIndexOf(lastWord) == input.Length - 1;
         }
     }
 }

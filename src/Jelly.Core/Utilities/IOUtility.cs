@@ -48,7 +48,14 @@ namespace Jelly.Utilities
             }
 
             return path;
-        } 
+        }
 
+        public static byte[] StreamToBytes(Stream stream)
+        {
+            byte[] bytes = new byte[stream.Length];
+            stream.Seek(0, SeekOrigin.Begin);
+            stream.Read(bytes, 0, bytes.Length);
+            return bytes;
+        } 
     }
 }

@@ -56,8 +56,8 @@
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\ICacheDependency.cs" />
-    <Compile Include="Utilities\ConvertUtility.cs" />
     <Compile Include="Utilities\CopyUtility.cs" />
+    <Compile Include="Utilities\ExceptionManager.cs" />
     <Compile Include="Utilities\IOUtility.cs" />
     <Compile Include="Encryption\Base64.cs" />
     <Compile Include="Encryption\DES.cs" />
@@ -69,6 +69,8 @@
     <Compile Include="Utilities\RandomUtility.cs" />
     <Compile Include="Utilities\SerializationUtility.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Utilities\StringUtility.cs" />
+    <Compile Include="Utilities\UriUtility.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
