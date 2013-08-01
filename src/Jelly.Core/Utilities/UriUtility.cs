@@ -42,12 +42,9 @@ namespace Jelly.Utilities
 
             if (url.Contains("?"))
             {
-                if (!url.IsLastWord('?'))
+                if (!url.IsLastWord('?') && !url.IsLastWord('&'))
                 {
-                    if (!url.IsLastWord('&'))
-                    {
-                        url += "&";
-                    }
+                    url += "&";
                 }
             }
             else
