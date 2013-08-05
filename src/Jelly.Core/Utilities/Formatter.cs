@@ -22,7 +22,9 @@ namespace Jelly.Utilities
                 bytes is Int32 ||
                 bytes is UInt32 ||
                 bytes is Int64 ||
-                bytes is UInt64)
+                bytes is UInt64 ||
+                bytes is Single ||
+                bytes is Double)
             {
 
                 double size = Convert.ToDouble(bytes, CultureInfo.CurrentCulture);
@@ -38,7 +40,7 @@ namespace Jelly.Utilities
                 }
                 else if (size >= Constants.Kilobyte && size < Constants.Megabyte)
                 {
-                    return string.Concat((size / Constants.Kilobyte).ToString("#"), "KB");
+                    return string.Concat((size / Constants.Kilobyte).ToString(format), "KB");
                 }
                 else if (size >= Constants.Megabyte && size < Constants.Gigabyte)
                 {
@@ -55,7 +57,7 @@ namespace Jelly.Utilities
             }
             else
             {
-                throw new Exception("The given arg data type is not Byte, sbyte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64");
+                throw new Exception("The given arg data type is not Byte, sbyte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double");
             }
         }
 
