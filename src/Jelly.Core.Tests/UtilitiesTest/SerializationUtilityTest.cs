@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Jelly.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,6 +8,31 @@ namespace Jelly.Tests.UtilitiesTest
     [TestClass]
     public class SerializationUtilityTest
     {
+        [TestMethod]
+        public void XmlFileToObjectTest() 
+        {
+            string xmlPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, @"\_data\", "Car.xml");
+            Car car = SerializationUtility.XmlToObject<Car>(xmlPath);
+
+            Assert.IsNotNull(car);
+            Assert.AreEqual("BMW", car.Name);
+            Assert.AreEqual(4, car.Wheel);
+        }
+
+        [TestMethod]
+        public void ObjectToXmlFileTest() 
+        {
+            string xmlPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, @"\_data\", "SavedCar.xml");
+            Car car = new Car()
+            {
+                Name = "A",
+                Wheel = 4
+            };
+
+            SerializationUtility.ObjectToXml(xmlPath, car);
+            Assert.IsTrue(File.Exists(xmlPath));
+        }
+
         [TestMethod]
         public void DeepCopyTest()
         {
@@ -47,5 +73,11 @@ namespace Jelly.Tests.UtilitiesTest
             public string FamilyName { get; set; }
             public int Population { get; set; }
         }
+    }
+
+    public class Car
+    {
+        public string Name { get; set; }
+        public int Wheel { get; set; }
     }
 }
