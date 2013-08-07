@@ -4,11 +4,11 @@ namespace Jelly.Utilities
 {
     public class ExceptionManager
     {
-        public static void ThrowIfNull(object obj, string parameterName)
+        public static void ThrowIfNull(object obj, string message)
         {
             if (obj == null)
             {
-                throw new ArgumentNullException(parameterName);
+                throw new ArgumentNullException(message);
             }
         }
 
@@ -20,11 +20,19 @@ namespace Jelly.Utilities
             }
         }
 
-        public static void ThrowIfEmpty(string str, string parameterName) 
+        public static void ThrowIfEmpty(string str, string message) 
         {
             if (string.IsNullOrWhiteSpace(str))
             {
-                throw new ArgumentNullException(parameterName);
+                throw new ArgumentNullException(message);
+            }
+        }
+
+        public static void ThrowIfEmpty(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                throw new ArgumentNullException();
             }
         }
     }
