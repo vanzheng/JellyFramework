@@ -71,6 +71,8 @@ namespace Jelly.Database
                     return Constants.OleDbConnectionManagerTypeName;
                 case Constants.SqlClientProviderName:
                     return Constants.SqlConnectionManagerTypeName;
+                case Constants.OracleProviderName:
+                    return Constants.OracleConnectionManagerTypeName;
                 default:
                     return Constants.SqlConnectionManagerTypeName;
             }
