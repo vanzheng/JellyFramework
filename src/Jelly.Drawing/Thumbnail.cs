@@ -14,7 +14,7 @@ namespace Jelly.Drawing
     {
         public static void MakeThumbnail(string sourceImage, string destinationImage, int width, int height)
         {
-            if (string.IsNullOrWhiteSpace(sourceImage))
+            if (string.IsNullOrEmpty(sourceImage))
             {
                 throw new ArgumentNullException("sourceImage");
             }
@@ -24,7 +24,7 @@ namespace Jelly.Drawing
                 throw new Exception("The source image doesn't exist.");
             }
 
-            destinationImage = IOUtility.CreateDirectory(destinationImage);
+            IOUtility.CreateDirectory(destinationImage);
             System.Drawing.Image originalImage = null;
             try
             {

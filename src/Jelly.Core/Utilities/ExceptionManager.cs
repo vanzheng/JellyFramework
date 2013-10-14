@@ -22,7 +22,7 @@ namespace Jelly.Utilities
 
         public static void ThrowIfEmpty(string str, string message) 
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrEmpty(str))
             {
                 throw new ArgumentNullException(message);
             }
@@ -30,7 +30,7 @@ namespace Jelly.Utilities
 
         public static void ThrowIfEmpty(string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrEmpty(str))
             {
                 throw new ArgumentNullException();
             }

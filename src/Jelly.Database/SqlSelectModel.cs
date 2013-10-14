@@ -61,22 +61,22 @@ namespace Jelly.Database
             StringBuilder builder = new StringBuilder();
             builder.AppendFormat("SELECT {0} FROM {1}", SelectClause, FromClause);
 
-            if (!string.IsNullOrWhiteSpace(WhereClause))
+            if (!string.IsNullOrEmpty(WhereClause))
             {
                 builder.AppendFormat(" WHERE {0}", WhereClause);
             }
 
-            if (!string.IsNullOrWhiteSpace(GroupByClause)) 
+            if (!string.IsNullOrEmpty(GroupByClause)) 
             {
                 builder.AppendFormat(" GROUP BY {0}", GroupByClause);
             }
 
-            if (!string.IsNullOrWhiteSpace(HavingClause)) 
+            if (!string.IsNullOrEmpty(HavingClause)) 
             {
                 builder.AppendFormat(" HAVING {0}", HavingClause);
             }
 
-            if (!string.IsNullOrWhiteSpace(OrderByClause))
+            if (!string.IsNullOrEmpty(OrderByClause))
             {
                 builder.AppendFormat(" ORDER BY {0}", OrderByClause);
             }

@@ -38,12 +38,12 @@ namespace Jelly.Drawing.Watermark
         /// </summary>
         public void Make(string sourceImage, string destinationImage)
         {
-            if (string.IsNullOrWhiteSpace(sourceImage))
+            if (string.IsNullOrEmpty(sourceImage))
             {
                 throw new ArgumentNullException("sourceImage");
             }
 
-            destinationImage = IOUtility.CreateDirectory(destinationImage);
+            IOUtility.CreateDirectory(destinationImage);
 
             //放入Image对象，获取图片高度和宽度
             Image image = Image.FromFile(sourceImage);

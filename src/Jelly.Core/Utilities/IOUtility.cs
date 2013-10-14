@@ -6,45 +6,68 @@ namespace Jelly.Utilities
     public static class IOUtility
     {
         /// <summary>
-        /// Uses safe mode to create diretory folder. 
-        /// If the folders are not exist, the method will auto create the folders.
+        /// Creates direcotries by specified path or full file name.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">The specified path or full file name.</param>
         /// <returns></returns>
-        public static string CreateDirectory(string path)
+        public static DirectoryInfo CreateDirectory(string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrEmpty(path))
             {
                 throw new ArgumentNullException("path");
             }
 
             string fullPath = GetFullPath(path);
+            if (fullPath.EndsWith("/") || fullPath.EndsWith("\\")) 
+            {
+                fullPath = fullPath + "\\";    
+            }
+
             string directoryPath = Path.GetDirectoryName(fullPath);
             if (!Directory.Exists(directoryPath))
             {
-                Directory.CreateDirectory(directoryPath);
+                return Directory.CreateDirectory(directoryPath);
             }
 
-            return fullPath;
+            return new DirectoryInfo(fullPath);
         }
 
+        /// <summary>
+        /// Gets full path base on current domain base directory.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string GetFullPath(string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return path;
             }
 
             path = path.Trim();
-            if (path.StartsWith("~/"))
+            if (path.StartsWith("/") || path.StartsWith("\\")) 
+            {
+                if (path.Length == 1)
+                {
+                    path = AppDomain.CurrentDomain.BaseDirectory;
+                }
+                else
+                {
+                    path = path.Substring(1).Replace('/', '\\');
+                    path = AppDomain.CurrentDomain.BaseDirectory + path;
+                }
+            }
+            else if (path.StartsWith("~/") || path.StartsWith("~\\"))
             {
                 if (path.Length == 2)
                 {
-                    throw new Exception("The given path '~/' is invalid.");
+                    path = AppDomain.CurrentDomain.BaseDirectory;
                 }
-
-                path = path.Substring(2).Replace('/', '\\');
-                path = AppDomain.CurrentDomain.BaseDirectory + path;
+                else 
+                {
+                    path = path.Substring(2).Replace('/', '\\');
+                    path = AppDomain.CurrentDomain.BaseDirectory + path;
+                }
             }
 
             return path;

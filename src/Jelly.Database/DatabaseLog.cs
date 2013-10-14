@@ -25,14 +25,14 @@ namespace Jelly.Database
             }
         }
 
-        private static string ValidateFullLogPath(string path, string pattern)
+        private static string CreateLogPathDirectories(string path, string pattern)
         {
-            if (string.IsNullOrWhiteSpace(pattern))
+            if (string.IsNullOrEmpty(pattern))
             {
                 path = Regex.Replace(path, "{pattern}", DateTime.Now.ToString(pattern), RegexOptions.IgnoreCase);
             }
 
-            return IOUtility.CreateDirectory(path);
+            return IOUtility.CreateDirectory(path).FullName;
         }
 
         private static string LogCommandString(IDbCommand command) 
@@ -80,7 +80,7 @@ namespace Jelly.Database
         {
             if (InfoLogSettings != null && InfoLogSettings.Enabled) 
             {
-                string FullLogPath = ValidateFullLogPath(InfoLogSettings.LogPath, InfoLogSettings.DateTimePattern);
+                string FullLogPath = CreateLogPathDirectories(InfoLogSettings.LogPath, InfoLogSettings.DateTimePattern);
 
                 using (StreamWriter writer = new StreamWriter(FullLogPath, true))
                 {
@@ -95,7 +95,7 @@ namespace Jelly.Database
         {
             if (ErrorLogSettings != null && ErrorLogSettings.Enabled)
             {
-                string FullLogPath = ValidateFullLogPath(ErrorLogSettings.LogPath, ErrorLogSettings.DateTimePattern);
+                string FullLogPath = CreateLogPathDirectories(ErrorLogSettings.LogPath, ErrorLogSettings.DateTimePattern);
 
                 using (StreamWriter writer = new StreamWriter(FullLogPath, true))
                 {

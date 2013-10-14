@@ -17,17 +17,17 @@ namespace Jelly.Web.Utilities
         {
             string result = String.Empty;
             result = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (string.IsNullOrWhiteSpace(result))
+            if (string.IsNullOrEmpty(result))
             {
                 result = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
             }
 
-            if (string.IsNullOrWhiteSpace(result))
+            if (string.IsNullOrEmpty(result))
             {
                 result = HttpContext.Current.Request.UserHostAddress;
             }
 
-            if (string.IsNullOrWhiteSpace(result) || !IsIPAddress(result))
+            if (string.IsNullOrEmpty(result) || !IsIPAddress(result))
             {
                 return "0.0.0.0";
             }
@@ -100,7 +100,7 @@ namespace Jelly.Web.Utilities
         /// </summary>
         public static string JoinChar(string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrEmpty(str))
                 return str;
             else
             {

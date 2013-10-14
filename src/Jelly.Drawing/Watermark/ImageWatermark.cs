@@ -33,12 +33,12 @@ namespace Jelly.Drawing.Watermark
         /// </summary>
         public void Make(string sourceImage, string destinationImage)
         {
-            if (string.IsNullOrWhiteSpace(sourceImage))
+            if (string.IsNullOrEmpty(sourceImage))
             {
                 throw new ArgumentNullException("sourceImage");
             }
 
-            destinationImage = IOUtility.CreateDirectory(destinationImage);
+            IOUtility.CreateDirectory(destinationImage);
 
             //获得水印图像
             Image markImg = Image.FromFile(this._watermarkImage);
