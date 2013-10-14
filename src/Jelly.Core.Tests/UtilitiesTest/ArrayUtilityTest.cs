@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Jelly.Utilities;
+﻿using Jelly.Utilities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jelly.Tests.UtilitiesTest
 {

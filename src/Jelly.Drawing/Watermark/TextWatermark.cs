@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using Jelly.Utilities;
 using System.IO;
 
 namespace Jelly.Drawing.Watermark
