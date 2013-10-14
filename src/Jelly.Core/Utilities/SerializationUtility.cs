@@ -16,7 +16,7 @@ namespace Jelly.Utilities
         /// <returns>The specified object.</returns>
         public static T XmlToObject<T>(string xmlPath)
         {
-            if (string.IsNullOrEmpty(xmlPath)) 
+            if (string.IsNullOrWhiteSpace(xmlPath)) 
             {
                 throw new ArgumentNullException("xmlPath");
             }

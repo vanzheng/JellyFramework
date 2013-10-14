@@ -6,71 +6,44 @@ namespace Jelly.Utilities
     public static class IOUtility
     {
         /// <summary>
-        /// Creates direcotries by specified path or full file name.
+        /// Gets full path base on current domain base directory.
         /// </summary>
-        /// <param name="path">The specified path or full file name.</param>
+        /// <param name="fullPath"></param>
         /// <returns></returns>
-        public static DirectoryInfo CreateDirectory(string path)
+        public static string GetFullPath(string path)
         {
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrWhiteSpace(path))
             {
                 throw new ArgumentNullException("path");
             }
 
-            string fullPath = GetFullPath(path);
-            if (fullPath.EndsWith("/") || fullPath.EndsWith("\\")) 
+            string fullPath = path.Trim();
+            if (fullPath.StartsWith("/") || fullPath.StartsWith("\\")) 
             {
-                fullPath = fullPath + "\\";    
-            }
-
-            string directoryPath = Path.GetDirectoryName(fullPath);
-            if (!Directory.Exists(directoryPath))
-            {
-                return Directory.CreateDirectory(directoryPath);
-            }
-
-            return new DirectoryInfo(fullPath);
-        }
-
-        /// <summary>
-        /// Gets full path base on current domain base directory.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string GetFullPath(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return path;
-            }
-
-            path = path.Trim();
-            if (path.StartsWith("/") || path.StartsWith("\\")) 
-            {
-                if (path.Length == 1)
+                if (fullPath.Length == 1)
                 {
-                    path = AppDomain.CurrentDomain.BaseDirectory;
+                    fullPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, Path.DirectorySeparatorChar);
                 }
                 else
                 {
-                    path = path.Substring(1).Replace('/', '\\');
-                    path = AppDomain.CurrentDomain.BaseDirectory + path;
+                    fullPath = fullPath.Substring(1).Replace('/', '\\');
+                    fullPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, Path.DirectorySeparatorChar, fullPath);
                 }
             }
-            else if (path.StartsWith("~/") || path.StartsWith("~\\"))
+            else if (fullPath.StartsWith("~/") || fullPath.StartsWith("~\\"))
             {
-                if (path.Length == 2)
+                if (fullPath.Length == 2)
                 {
-                    path = AppDomain.CurrentDomain.BaseDirectory;
+                    fullPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, Path.DirectorySeparatorChar);
                 }
                 else 
                 {
-                    path = path.Substring(2).Replace('/', '\\');
-                    path = AppDomain.CurrentDomain.BaseDirectory + path;
+                    fullPath = fullPath.Substring(2).Replace('/', '\\');
+                    fullPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, Path.DirectorySeparatorChar, fullPath);
                 }
             }
 
-            return path;
+            return fullPath;
         }
 
         public static byte[] StreamToBytes(Stream stream)

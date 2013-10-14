@@ -63,7 +63,7 @@ namespace Jelly.Extensions
                 throw new ArgumentException("Maximum length must be greater than zero.", "maximumLength");
             }
 
-            if (!string.IsNullOrEmpty(s) && s.Length > maximumLength)
+            if (!string.IsNullOrWhiteSpace(s) && s.Length > maximumLength)
             {
                 string truncatedString = s.Substring(0, maximumLength);
                 // incase the last character is a space

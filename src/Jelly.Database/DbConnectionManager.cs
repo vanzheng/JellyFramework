@@ -97,7 +97,7 @@ namespace Jelly.Database
 
         protected virtual string EnsureParameterPrefix(string parameterName) 
         {
-            if (string.IsNullOrEmpty(parameterName))
+            if (string.IsNullOrWhiteSpace(parameterName))
             {
                 throw new ArgumentNullException("parameterName");
             }

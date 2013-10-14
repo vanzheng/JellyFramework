@@ -25,7 +25,7 @@ namespace Jelly.Utilities
                 qs = qs.Remove(qs.Length - 1);
             }
 
-            if (!String.IsNullOrEmpty(qs))
+            if (!String.IsNullOrWhiteSpace(qs))
             {
                 qs = string.Concat("?", qs);
             }
