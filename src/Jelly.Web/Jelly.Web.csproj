@@ -52,6 +52,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SiteUtils.cs" />
     <Compile Include="UploadFileManager.cs" />
+    <Compile Include="UploadInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jelly.Core\Jelly.Core.csproj">
+      <Project>{63E76AE8-EF9E-4AA7-B6E6-AA1548650BAC}</Project>
+      <Name>Jelly.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -46,6 +46,18 @@ namespace Jelly.Helpers
             return fullPath;
         }
 
+        public static string EnsurePathEndSlash(string path) 
+        {
+            ExceptionManager.ThrowIfEmpty(path, "The path is invalid");
+
+            if (!path.EndsWith("/")) 
+            {
+                return string.Concat(path, "/");
+            }
+
+            return path;
+        }
+
         public static byte[] StreamToBytes(Stream stream)
         {
             byte[] bytes = new byte[stream.Length];

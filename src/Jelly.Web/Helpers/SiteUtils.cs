@@ -2,6 +2,8 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.IO;
+using Jelly.Helpers;
 
 namespace Jelly.Web.Helpers
 {
@@ -118,6 +120,20 @@ namespace Jelly.Web.Helpers
                     str += "?";
                 return str;
             }
+        }
+
+        public static void CreateFolders(string relativePath) 
+        {
+            if (!Directory.Exists(HttpContext.Current.Server.MapPath(relativePath)))
+            {
+                Directory.CreateDirectory(HttpContext.Current.Server.MapPath(relativePath));
+            }
+        }
+
+        public static string GetFullName(string path) 
+        {
+            ExceptionManager.ThrowIfEmpty(path, "The path is invalid");
+            return HttpContext.Current.Server.MapPath(path);
         }
 
         public static string GetStatusUrl(string url,string statusText) 

@@ -1,180 +1,108 @@
 using System;
 using System.IO;
 using System.Web;
+using Jelly.Helpers;
+using Jelly.Web.Helpers;
 
 namespace Jelly.Web
 {
     public class UploadFileManager
     {
-        private int _maxSize = int.MaxValue;
-        private string _allowExt = string.Empty;
-        private int _fileSize = 0;
-        private int _error = 0;
-        private string _errormessage = string.Empty;
-        private string _savefilename;
-        private UploadFileErrorCode _errorCode;
-
-        public UploadFileManager() 
-        {
-        }
-
-        public UploadFileManager(int maxsize, string allowExt) 
-        {
-            this._maxSize = maxsize;
-            this._allowExt = allowExt;
-        }
-
         /// <summary>
-        /// 最大文件大小
+        /// Check the file name extension is allowed or not.
         /// </summary>
-        public int MaxSize 
-        {
-            get { return _maxSize; }
-            set { _maxSize = value; }
-        }
-
-        /// <summary>
-        /// 允许的扩展名，指定的扩展名类型字符串，多个扩展用|分隔
-        /// </summary>
-        public string AllowExt 
-        {
-            get { return _allowExt; }
-            set { _allowExt = value; }
-        }
-
-        /// <summary>
-        /// 文件大小
-        /// </summary>
-        public int FileSize 
-        {
-            get { return _fileSize; }
-        }
-
-        public int Error 
-        {
-            get { return _error; }
-        }
-
-        public string ErrorMessage 
-        {
-            get { return _errormessage; }
-        }
-
-        public string SaveFileName 
-        {
-            get { return _savefilename; }
-        }
-
-        /// <summary>
-        /// 检查文件扩展名是否符合指定的扩展名类型
-        /// </summary>
-        /// <param name="fileExt">文件的扩展名</param>
-        /// <param name="allowExt">指定的扩展名类型字符串，多个扩展用|分隔</param>
+        /// <param name="fileExt">The file name extension</param>
+        /// <param name="allowedExt">The allowed extension name list, separate by "|" symbol.</param>
         /// <returns></returns>
-        public bool CheckFileExt(string fileExt, string allowExt)
+        public static bool CheckFileExt(string fileExt, string allowedExt)
         {
-            string[] arrFileExt = allowExt.Split(',');
-            for (int i = 0; i < arrFileExt.Length; i++)
+            if (allowedExt == null || string.IsNullOrWhiteSpace(allowedExt) || allowedExt.Equals("*")) 
             {
-                if (arrFileExt[i] == fileExt)
+                return true;
+            }
+
+            string[] arrAllowedExts = allowedExt.Split(',');
+            foreach (string ext in arrAllowedExts) 
+            {
+                if (fileExt == ext) 
                 {
                     return true;
                 }
             }
+            
             return false;
         }
 
-        private bool ValidateUploadFile(HttpPostedFile postedFile, string filepath) 
-        {
-            if (postedFile == null || postedFile.ContentLength == 0) 
-            {
-                _errorCode = UploadFileErrorCode.UploadFileNotFound;
-                return false;
-            }
-
-            _fileSize = postedFile.ContentLength;
-            if (_fileSize > _maxSize) 
-            {
-                _errorCode = UploadFileErrorCode.ExceedMaxSize;
-                return false;
-            }
-
-            return true;
-        }
-
         /// <summary>
-        /// 上传文件
+        /// Upload the file.
         /// </summary>
-        /// <param name="postedFile">HttpPostedFile对象</param>
-        /// <param name="filepath">上传的路径</param>
-        public void Upload(HttpPostedFile postedFile, string filepath)
+        /// <param name="postedFile">The HttpPostedFile object.</param>
+        /// <param name="relativeUploadPath">The relative upload file path.</param>
+        /// <param name="maxSize">The allowed maximum size</param>
+        /// <param name="allowedExts">The allowed extension name list, separate by "|" symbol.</param>
+        /// <param name="autoGenerateName">Is auto generate file name or not.</param>
+        /// <returns>The UploadInfo object.</returns>
+        public static UploadInfo Upload(HttpPostedFile postedFile, string relativeUploadPath, int maxSize, string allowedExts, bool autoGenerateName = true)
         {
+            UploadInfo uploadInfo = new UploadInfo();
+
             if (postedFile != null || postedFile.ContentLength > 0)
             {
-                this._fileSize = postedFile.ContentLength;
-                if (this._fileSize > this._maxSize)
-                {
-                    this._error = 1;
-                    this._errormessage = string.Format("上传文件不能大于{0}", FormatSizeString(this._maxSize));
-                }
+                uploadInfo.FileSize = postedFile.ContentLength;
 
+                if (uploadInfo.FileSize > maxSize)
+                {
+                    uploadInfo.IsSucceed = false;
+                    uploadInfo.ErrorCode = UploadFileErrorCode.ExceedMaxSize;
+                }
                 else
                 {
-                    string fullname = postedFile.FileName;
-                    string filename = fullname.Substring(fullname.LastIndexOf("\\") + 1);
-                    string ext = filename.Substring(filename.LastIndexOf(".") + 1);
-                    if (!CheckFileExt(ext, this._allowExt))
+                    string fullName = postedFile.FileName;
+                    string fileName = fullName.Substring(fullName.LastIndexOf("\\") + 1);
+                    string ext = fileName.Substring(fileName.LastIndexOf(".") + 1);
+
+                    if (autoGenerateName)
                     {
-                        this._error = 2;
-                        this._errormessage = string.Format("文件类型只能为{0}", this._allowExt);
+                        string randomName = DateTime.Now.ToString("yyyyMMddhhmmssfff") + RandomUtils.GetRandomNumber(10000, 99999).ToString();
+                        uploadInfo.FileName = randomName + ext;
+                    }
+                    else 
+                    {
+                        uploadInfo.FileName = fileName;
                     }
 
+                    if (!CheckFileExt(ext, allowedExts))
+                    {
+                        uploadInfo.IsSucceed = false;
+                        uploadInfo.ErrorCode = UploadFileErrorCode.NotAllowedFileType;
+                    }
                     else
                     {
-                        Random r = new Random(Guid.NewGuid().GetHashCode());
-                        string AutoFileName = DateTime.Now.ToString("yyyyMMddhhmmssfff") + r.Next(10000, 99999).ToString();
-                        this._savefilename = filepath + AutoFileName + "." + ext;
-
-                        if (!Directory.Exists(HttpContext.Current.Server.MapPath(filepath)))
-                            Directory.CreateDirectory(HttpContext.Current.Server.MapPath(filepath));
-                        postedFile.SaveAs(HttpContext.Current.Server.MapPath(this._savefilename));
+                        try
+                        {
+                            string path = IOUtils.EnsurePathEndSlash(relativeUploadPath);
+                            SiteUtils.CreateFolders(path);
+                            uploadInfo.SavePath = SiteUtils.GetFullName(path + uploadInfo.FileName);
+                            postedFile.SaveAs(HttpContext.Current.Server.MapPath(uploadInfo.SavePath));
+                            uploadInfo.IsSucceed = true;
+                            uploadInfo.ErrorCode = UploadFileErrorCode.Succeed;
+                        }
+                        catch (Exception ex) 
+                        {
+                            uploadInfo.IsSucceed = false;
+                            uploadInfo.ErrorCode = UploadFileErrorCode.Unknow;
+                            uploadInfo.ExceptionMessage = ex.Message;
+                        }
                     }
                 }
             }
             else 
             {
-                _errorCode = UploadFileErrorCode.UploadFileNotFound;
+                uploadInfo.IsSucceed = false;
+                uploadInfo.ErrorCode = UploadFileErrorCode.UploadFileNotFound;
             }
 
+            return uploadInfo;
         }
-
-        private string FormatSizeString(int size) 
-        {
-            if (size <= 0)
-                return "";
-            else 
-            {
-                if (size > 0 && size < 1024)
-                    return size + "B";
-                else if (size >= 1024 && size < 1024 * 1024)
-                    return size / 1024 + "K";
-                else if (size >= 1024 * 1024 && size < 1024 * 1024 * 1024)
-                    return size / (1024 * 1024) + "M";
-                else if (size >= 1024 * 1024 * 1024)
-                    return size / (1024 * 1024 * 1024) + "G";
-                else
-                    return "";
-            }
-        }
-    }
-
-    public enum UploadFileErrorCode 
-    {
-        Succeed,
-        ExceedMaxSize,
-        NotAllowedFileType,
-        UploadFileNotFound,
-        SavePathIsValid,
-        Unknow
     }
 }
