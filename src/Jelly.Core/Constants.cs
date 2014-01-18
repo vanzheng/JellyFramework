@@ -4,6 +4,10 @@ namespace Jelly
 {
     public class Constants
     {
+        public const string CarriageReturnLineFeed = "\r\n";
+        public const char CarriageReturn = '\r';
+        public const char LineFeed = '\n';
+
         public readonly static double Kilobyte = 1024d;
         public readonly static double Megabyte = Math.Pow(Kilobyte, 2);
         public readonly static double Gigabyte = Math.Pow(Kilobyte, 3);

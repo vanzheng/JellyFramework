@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Jelly.Caching.Encryption
+namespace Jelly.Encryption
 {
     public class SHA1
     {
