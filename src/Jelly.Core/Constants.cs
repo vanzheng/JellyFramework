@@ -2,7 +2,7 @@
 
 namespace Jelly
 {
-    public class Constants
+    internal static class Constants
     {
         public const string CarriageReturnLineFeed = "\r\n";
         public const char CarriageReturn = '\r';
