@@ -98,30 +98,6 @@ namespace Jelly.Web.Helpers
             return HttpContext.Current.Server.MapPath(filepath);
         }
 
-        /// <summary>
-        /// 向字符串中添加?或&
-        /// </summary>
-        public static string JoinChar(string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))
-                return str;
-            else
-            {
-                if (str.Contains("?"))  //含有问号
-                {
-                    //?不是最后一个字符
-                    if (str.LastIndexOf("?") < str.Length - 1)
-                    {
-                        if (str.LastIndexOf("&") < str.Length - 1)  //&不是最后一个字符
-                            str += "&";
-                    }
-                }
-                else
-                    str += "?";
-                return str;
-            }
-        }
-
         public static void CreateFolders(string relativePath) 
         {
             if (!Directory.Exists(HttpContext.Current.Server.MapPath(relativePath)))
@@ -136,11 +112,168 @@ namespace Jelly.Web.Helpers
             return HttpContext.Current.Server.MapPath(path);
         }
 
-        public static string GetStatusUrl(string url,string statusText) 
+        #region Html Helpers
+
+        /// <summary>
+        /// Convert html entities to txt.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string ToTxt(string input)
         {
-            url = JoinChar(url);
-            url = Regex.Replace(url,@"(\?|\&){1}status=.*(\&)?","",RegexOptions.IgnoreCase);
-            return JoinChar(url) + "status=" + statusText;
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                string temp = input;
+                temp = Regex.Replace(temp, "&nbsp;", " ", RegexOptions.IgnoreCase);
+                temp = Regex.Replace(temp, @"<\s*br\s*(/)?\s*>", "\r\n", RegexOptions.IgnoreCase);
+                temp = Regex.Replace(temp, "&lt;", "<", RegexOptions.IgnoreCase);
+                temp = Regex.Replace(temp, "&gt;", ">", RegexOptions.IgnoreCase);
+                temp = Regex.Replace(temp, "&amp;", "&", RegexOptions.IgnoreCase);
+                return temp;
+            }
+        }
+
+        public static string ReplaceHtmlTag(string html)
+        {
+            if (string.IsNullOrEmpty(html))
+            {
+                return html;
+            }
+
+            html = Regex.Replace(html, @"<.[^>]*>", "", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"-->", "", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"<!--.*", "", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(nbsp|#160);", "", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(iexcl|#161);", "\xa1", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(cent|#162);", "\xa2", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
+            html = Regex.Replace(html, @"&#(\d+);", "", RegexOptions.IgnoreCase);
+
+            return html;
+        }
+
+        public static string HtmlEncode(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
+
+            return HttpUtility.HtmlEncode(input.Trim());
+        }
+
+        #endregion
+
+        public static string ReplaceInString(string input, string badStr)
+        {
+            ExceptionManager.ThrowIfNull<ArgumentNullException>(badStr);
+
+            if (string.IsNullOrWhiteSpace(input)) 
+            {
+                return input;
+            }
+
+            string temp = input;
+            string[] badChars = badStr.Split('|');
+
+            foreach (string s in badChars) 
+            {
+                temp = Regex.Replace(temp, s, string.Empty, RegexOptions.IgnoreCase);
+            }
+
+            return temp;
+        }
+
+        public static string ReplaceBadQuery(string  input)
+        {
+            string badStr = @"'|<|>|^|*";
+            return ReplaceInString(input, badStr);
+        }
+
+        public static string GetSafeQuery(string paramName)
+        {
+            if (string.IsNullOrWhiteSpace(paramName)) 
+            {
+                return string.Empty;
+            }
+
+            string value = HttpContext.Current.Request.QueryString[paramName];
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                return HttpUtility.UrlDecode(ReplaceBadQuery(value));
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// 棼止外部提交数据
+        /// </summary>
+        public static void CheckOutSubmit()
+        {
+            string server_v1 = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_REFERER"];
+            string server_v2 = System.Web.HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
+            if (String.IsNullOrEmpty(server_v1) == true)
+            {
+                throw new Exception("禁止从外部提交数据");
+            }
+            server_v1 = server_v1.Substring(7, server_v2.Length);
+            if (server_v1 != server_v2)
+            {
+                throw new Exception("禁止从站点外部提交数据，请不要乱改参数！");
+            }
+        }
+
+        /// <summary>
+        /// 获取参数名为Act的值，用于后台Action提交数据
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAction(string actName)
+        {
+            return GetAction(actName, true);
+        }
+
+        public static string GetAction(string actName, bool IsCheckOutSubmit)
+        {
+            if (IsCheckOutSubmit)
+                CheckOutSubmit();
+            return HttpContext.Current.Request.QueryString[actName];
+        }
+
+        /// <summary>
+        /// 获取当前页
+        /// </summary>
+        /// <returns></returns>
+        public static int GetPageIndex()
+        {
+            return GetPageIndex("page");
+        }
+
+        /// <summary>
+        /// 获取当前页
+        /// </summary>
+        /// <param name="pageurl"></param>
+        /// <returns></returns>
+        public static int GetPageIndex(string paramName)
+        {
+            string page = ReplaceBadQuery(paramName);
+            if (string.IsNullOrEmpty(page))
+            {
+                return 1;
+            }
+            else
+            {
+                return Convert.ToInt32(page);
+            }
         }
 
         public static string RenderFlash(string src, int width, int height)
