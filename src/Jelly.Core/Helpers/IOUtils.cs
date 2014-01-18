@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
-    public static class IOUtility
+    public static class IOUtils
     {
         /// <summary>
         /// Gets full path base on current domain base directory.

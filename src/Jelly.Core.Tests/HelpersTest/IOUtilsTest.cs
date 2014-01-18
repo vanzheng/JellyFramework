@@ -1,14 +1,14 @@
 ﻿using System;
-using Jelly.Utilities;
+using Jelly.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jelly.Tests.UtilitiesTest
+namespace Jelly.Tests.HelpersTest
 {
     /// <summary>
-    /// Summary description for IOUtilityTest
+    /// Summary description for IOUtilsTest
     /// </summary>
     [TestClass]
-    public class IOUtilityTest
+    public class IOUtilsTest
     {
         [TestMethod]
         public void GetFullPathTest()
@@ -21,10 +21,10 @@ namespace Jelly.Tests.UtilitiesTest
             string expectedFullPath2 = AppDomain.CurrentDomain.BaseDirectory + "\\" + path2.Substring(2).Replace("/", "\\");
             string expectedFullPath3 = AppDomain.CurrentDomain.BaseDirectory + "\\";
             string expectedFullPath4 = expectedFullPath3;
-            string actualFullPath = IOUtility.GetFullPath(path);
-            string actualFullPath2 = IOUtility.GetFullPath(path2);
-            string actualFullPath3 = IOUtility.GetFullPath(path3);
-            string actualFullPath4 = IOUtility.GetFullPath(path4);
+            string actualFullPath = IOUtils.GetFullPath(path);
+            string actualFullPath2 = IOUtils.GetFullPath(path2);
+            string actualFullPath3 = IOUtils.GetFullPath(path3);
+            string actualFullPath4 = IOUtils.GetFullPath(path4);
 
             Assert.AreEqual(expectedFullPath, actualFullPath);
             Assert.AreEqual(expectedFullPath2, actualFullPath2);

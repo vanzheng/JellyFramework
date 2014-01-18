@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Jelly.Database.Configuration;
-using Jelly.Utilities;
+using Jelly.Helpers;
 
 namespace Jelly.Database
 {
@@ -32,7 +32,7 @@ namespace Jelly.Database
                 path = Regex.Replace(path, "{pattern}", DateTime.Now.ToString(pattern), RegexOptions.IgnoreCase);
             }
 
-            string fullPath = IOUtility.GetFullPath(path);
+            string fullPath = IOUtils.GetFullPath(path);
             if (!Directory.Exists(fullPath)) 
             {
                 Directory.CreateDirectory(path);

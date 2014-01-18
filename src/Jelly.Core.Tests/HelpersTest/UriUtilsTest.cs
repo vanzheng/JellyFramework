@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Specialized;
-using Jelly.Utilities;
+using Jelly.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jelly.Tests.UtilitiesTest
+namespace Jelly.Tests.HelpersTest
 {
     [TestClass]
-    public class UriUtilityTest
+    public class UriUtilsTest
     {
         [TestMethod]
         public void BuildQueryStringTest()
@@ -16,7 +16,7 @@ namespace Jelly.Tests.UtilitiesTest
             nac.Add("b", "2");
             nac.Add("c", "3");
 
-            string queryString = UriUtility.BuildQueryString(nac);
+            string queryString = UriUtils.BuildQueryString(nac);
             Assert.AreEqual("?a=1&b=2&c=3", queryString);
         }
 
@@ -29,10 +29,10 @@ namespace Jelly.Tests.UtilitiesTest
             string url2 = "http://www.123.com/?a=b";
             string url3 = "http://www.123.com/?a=b&";
 
-            string actualEmptyUrl = UriUtility.AppendQueryDelimiter(emptyUrl);
-            string actualUrl = UriUtility.AppendQueryDelimiter(url);
-            string actualUrl2 = UriUtility.AppendQueryDelimiter(url2);
-            string actualUrl3 = UriUtility.AppendQueryDelimiter(url3);
+            string actualEmptyUrl = UriUtils.AppendQueryDelimiter(emptyUrl);
+            string actualUrl = UriUtils.AppendQueryDelimiter(url);
+            string actualUrl2 = UriUtils.AppendQueryDelimiter(url2);
+            string actualUrl3 = UriUtils.AppendQueryDelimiter(url3);
 
             Assert.AreEqual("http://www.123.com/?", actualUrl);
             Assert.AreEqual("http://www.123.com/?a=b&", actualUrl2);

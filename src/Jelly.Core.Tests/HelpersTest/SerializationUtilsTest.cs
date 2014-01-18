@@ -1,18 +1,18 @@
 ﻿using System;
 using System.IO;
-using Jelly.Utilities;
+using Jelly.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jelly.Tests.UtilitiesTest
+namespace Jelly.Tests.HelpersTest
 {
     [TestClass]
-    public class SerializationUtilityTest
+    public class SerializationUtilsTest
     {
         [TestMethod]
         public void XmlFileToObjectTest() 
         {
             string xmlPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, @"\_data\", "Car.xml");
-            Car car = SerializationUtility.XmlToObject<Car>(xmlPath);
+            Car car = SerializationUtils.XmlToObject<Car>(xmlPath);
 
             Assert.IsNotNull(car);
             Assert.AreEqual("BMW", car.Name);
@@ -29,7 +29,7 @@ namespace Jelly.Tests.UtilitiesTest
                 Wheel = 4
             };
 
-            SerializationUtility.ObjectToXml(xmlPath, car);
+            SerializationUtils.ObjectToXml(xmlPath, car);
             Assert.IsTrue(File.Exists(xmlPath));
         }
 
@@ -49,7 +49,7 @@ namespace Jelly.Tests.UtilitiesTest
             };
 
             person.Family = family;
-            Person person2 = SerializationUtility.DeepCopy<Person>(person);
+            Person person2 = SerializationUtils.DeepCopy<Person>(person);
             family.Population = 8;
 
             Assert.AreEqual("A", person2.Name);

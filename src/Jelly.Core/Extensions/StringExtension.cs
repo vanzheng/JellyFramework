@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Jelly.Utilities;
+using Jelly.Helpers;
 
 namespace Jelly.Extensions
 {

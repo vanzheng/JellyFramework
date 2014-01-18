@@ -1,13 +1,12 @@
 ﻿using System.Web;
 using System.Web.UI;
 
-
-namespace Jelly.Web.Utilities
+namespace Jelly.Web.Helpers
 {
     /// <summary>
     /// 封装常用Js代码
     /// </summary>
-    public class JavascriptUtility
+    public class JavascriptUtils
     {
         /// <summary>
         /// 弹出消息框

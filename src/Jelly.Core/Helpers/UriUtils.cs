@@ -3,9 +3,9 @@ using System.Collections.Specialized;
 using System.Text;
 using Jelly.Extensions;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
-    public class UriUtility
+    public class UriUtils
     {
         public static string BuildQueryString(NameValueCollection queryStrings)
         {

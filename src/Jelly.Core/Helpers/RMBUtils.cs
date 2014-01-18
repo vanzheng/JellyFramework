@@ -1,11 +1,11 @@
 using System;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
     /// <summary> 
     /// CMB utility class.
     /// </summary> 
-    public static class RMBUtility
+    public static class RMBUtils
     {
         /// <summary> 
         /// Cast lowercase digital to capital CNY.

@@ -52,25 +52,25 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\DbDataReaderExtension.cs" />
-    <Compile Include="Utilities\ArrayUtility.cs" />
+    <Compile Include="Helpers\ArrayUtils.cs" />
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\ICacheDependency.cs" />
-    <Compile Include="Utilities\ExceptionManager.cs" />
-    <Compile Include="Utilities\Formatter.cs" />
-    <Compile Include="Utilities\IOUtility.cs" />
+    <Compile Include="Helpers\ExceptionManager.cs" />
+    <Compile Include="Helpers\Formatter.cs" />
+    <Compile Include="Helpers\IOUtils.cs" />
     <Compile Include="Encryption\Base64.cs" />
     <Compile Include="Encryption\DES.cs" />
     <Compile Include="Encryption\MD5.cs" />
     <Compile Include="Encryption\SHA1.cs" />
     <Compile Include="Encryption\HashEncode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\RMBUtility.cs" />
-    <Compile Include="Utilities\RandomUtility.cs" />
-    <Compile Include="Utilities\SerializationUtility.cs" />
+    <Compile Include="Helpers\RMBUtils.cs" />
+    <Compile Include="Helpers\RandomUtils.cs" />
+    <Compile Include="Helpers\SerializationUtils.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="Utilities\StringUtility.cs" />
-    <Compile Include="Utilities\UriUtility.cs" />
+    <Compile Include="Helpers\StringUtils.cs" />
+    <Compile Include="Helpers\UriUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

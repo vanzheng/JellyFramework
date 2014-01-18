@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Text;
-using Jelly.Utilities;
+using Jelly.Helpers;
 
 namespace Jelly.Drawing
 {
@@ -20,10 +20,10 @@ namespace Jelly.Drawing
                                                    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z' };
 
         private static Font[] fonts = {
-                                        new Font(new FontFamily("Times New Roman"), 20 + RandomUtility.GetRandomNumber(4), FontStyle.Bold),
-                                        new Font(new FontFamily("Georgia"), 20 + RandomUtility.GetRandomNumber(4), FontStyle.Bold),
-                                        new Font(new FontFamily("Arial"), 20 + RandomUtility.GetRandomNumber(4), FontStyle.Bold),
-                                        new Font(new FontFamily("Comic Sans MS"), 20 + RandomUtility.GetRandomNumber(4), FontStyle.Bold)
+                                        new Font(new FontFamily("Times New Roman"), 20 + RandomUtils.GetRandomNumber(4), FontStyle.Bold),
+                                        new Font(new FontFamily("Georgia"), 20 + RandomUtils.GetRandomNumber(4), FontStyle.Bold),
+                                        new Font(new FontFamily("Arial"), 20 + RandomUtils.GetRandomNumber(4), FontStyle.Bold),
+                                        new Font(new FontFamily("Comic Sans MS"), 20 + RandomUtils.GetRandomNumber(4), FontStyle.Bold)
                                      };
 
         public VerificationCode()
@@ -42,7 +42,7 @@ namespace Jelly.Drawing
                     this._finalCodes = latinLettersCodes;
                     break;
                 case Category.Numberic | Category.LatinLetters:
-                    this._finalCodes = ArrayUtility.Combin<char>(numbericCodes, latinLettersCodes);
+                    this._finalCodes = ArrayUtils.Combin<char>(numbericCodes, latinLettersCodes);
                     break;
             }
         }
@@ -58,7 +58,7 @@ namespace Jelly.Drawing
 
             for (int i = 0; i < codeCount; i++)
             {
-                Random random = RandomUtility.CreateRandom();
+                Random random = RandomUtils.CreateRandom();
                 pos = random.Next(len - 1);
                 randomCode.Append(allcodes[pos]);
             }
@@ -87,11 +87,11 @@ namespace Jelly.Drawing
 
             int fixedNumber = textcolor == 2 ? 60 : 0;
 
-            SolidBrush drawBrush = new SolidBrush(Color.FromArgb(RandomUtility.GetRandomNumber(100), RandomUtility.GetRandomNumber(100), RandomUtility.GetRandomNumber(100)));
+            SolidBrush drawBrush = new SolidBrush(Color.FromArgb(RandomUtils.GetRandomNumber(100), RandomUtils.GetRandomNumber(100), RandomUtils.GetRandomNumber(100)));
             for (int x = 0; x < 3; x++)
             {
-                Pen linePen = new Pen(Color.FromArgb(RandomUtility.GetRandomNumber(150) + fixedNumber, RandomUtility.GetRandomNumber(150) + fixedNumber, RandomUtility.GetRandomNumber(150) + fixedNumber), 1);
-                g.DrawLine(linePen, new PointF(0.0F + RandomUtility.GetRandomNumber(20), 0.0F + RandomUtility.GetRandomNumber(height)), new PointF(0.0F + RandomUtility.GetRandomNumber(width), 0.0F + RandomUtility.GetRandomNumber(height)));
+                Pen linePen = new Pen(Color.FromArgb(RandomUtils.GetRandomNumber(150) + fixedNumber, RandomUtils.GetRandomNumber(150) + fixedNumber, RandomUtils.GetRandomNumber(150) + fixedNumber), 1);
+                g.DrawLine(linePen, new PointF(0.0F + RandomUtils.GetRandomNumber(20), 0.0F + RandomUtils.GetRandomNumber(height)), new PointF(0.0F + RandomUtils.GetRandomNumber(width), 0.0F + RandomUtils.GetRandomNumber(height)));
             }
 
 
@@ -99,16 +99,16 @@ namespace Jelly.Drawing
             for (int x = 0; x < code.Length; x++)
             {
                 m.Reset();
-                m.RotateAt(RandomUtility.GetRandomNumber(30) - 15, new PointF(Convert.ToInt64(width * (0.10 * x)), Convert.ToInt64(height * 0.5)));
+                m.RotateAt(RandomUtils.GetRandomNumber(30) - 15, new PointF(Convert.ToInt64(width * (0.10 * x)), Convert.ToInt64(height * 0.5)));
                 g.Transform = m;
-                drawBrush.Color = Color.FromArgb(RandomUtility.GetRandomNumber(150) + fixedNumber + 20, RandomUtility.GetRandomNumber(150) + fixedNumber + 20, RandomUtility.GetRandomNumber(150) + fixedNumber + 20);
-                PointF drawPoint = new PointF(0.0F + RandomUtility.GetRandomNumber(4) + x * 20, 3.0F + RandomUtility.GetRandomNumber(3));
-                g.DrawString(RandomUtility.GetRandomNumber(1) == 1 ? code[x].ToString() : code[x].ToString().ToUpper(), fonts[RandomUtility.GetRandomNumber(fonts.Length - 1)], drawBrush, drawPoint);
+                drawBrush.Color = Color.FromArgb(RandomUtils.GetRandomNumber(150) + fixedNumber + 20, RandomUtils.GetRandomNumber(150) + fixedNumber + 20, RandomUtils.GetRandomNumber(150) + fixedNumber + 20);
+                PointF drawPoint = new PointF(0.0F + RandomUtils.GetRandomNumber(4) + x * 20, 3.0F + RandomUtils.GetRandomNumber(3));
+                g.DrawString(RandomUtils.GetRandomNumber(1) == 1 ? code[x].ToString() : code[x].ToString().ToUpper(), fonts[RandomUtils.GetRandomNumber(fonts.Length - 1)], drawBrush, drawPoint);
                 g.ResetTransform();
             }
 
 
-            double distort = RandomUtility.GetRandomNumber(5, 10) * (RandomUtility.GetRandomNumber(10) == 1 ? 1 : -1);
+            double distort = RandomUtils.GetRandomNumber(5, 10) * (RandomUtils.GetRandomNumber(10) == 1 ? 1 : -1);
 
             using (Bitmap copy = (Bitmap)bitmap.Clone())
             {

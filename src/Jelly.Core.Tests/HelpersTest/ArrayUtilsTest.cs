@@ -1,10 +1,10 @@
-﻿using Jelly.Utilities;
+﻿using Jelly.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jelly.Tests.UtilitiesTest
+namespace Jelly.Tests.HelpersTest
 {
     [TestClass]
-    public class ArrayUtilityTest
+    public class ArrayUtilsTest
     {
         [TestMethod]
         public void CombinTest()
@@ -16,9 +16,9 @@ namespace Jelly.Tests.UtilitiesTest
             string[] one3 = new string[] { "1", "2" };
             string[] two3 = new string[] { "3" };
 
-            string[] result = ArrayUtility.Combin<string>(one, two);
-            string[] result2 = ArrayUtility.Combin<string>(one2, two2);
-            string[] result3 = ArrayUtility.Combin<string>(one3, two3);
+            string[] result = ArrayUtils.Combin<string>(one, two);
+            string[] result2 = ArrayUtils.Combin<string>(one2, two2);
+            string[] result3 = ArrayUtils.Combin<string>(one3, two3);
 
             Assert.IsNull(result);
             Assert.IsNotNull(result2);

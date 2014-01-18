@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
-    public static class ArrayUtility
+    public static class ArrayUtils
     {
         public static T[] Combin<T>(T[] oneArray, T[] twoArray) 
         {

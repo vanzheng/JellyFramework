@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
     public class Formatter
     {

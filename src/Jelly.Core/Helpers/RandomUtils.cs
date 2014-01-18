@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
-    public static class RandomUtility
+    public static class RandomUtils
     {
         public static Random CreateRandom() 
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
     public class ExceptionManager
     {

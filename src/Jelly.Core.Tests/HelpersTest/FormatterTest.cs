@@ -1,8 +1,8 @@
 ﻿using System;
-using Jelly.Utilities;
+using Jelly.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jelly.Tests.UtilitiesTest
+namespace Jelly.Tests.HelpersTest
 {
     [TestClass]
     public class FormatterTest

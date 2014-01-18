@@ -4,9 +4,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Jelly.Utilities
+namespace Jelly.Helpers
 {
-    public class SerializationUtility
+    public class SerializationUtils
     {
         /// <summary>
         /// Convert xml file to object.
