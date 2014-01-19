@@ -106,12 +106,6 @@ namespace Jelly.Web.Helpers
             }
         }
 
-        public static string GetFullName(string path) 
-        {
-            ExceptionManager.ThrowIfEmpty(path, "The path is invalid");
-            return HttpContext.Current.Server.MapPath(path);
-        }
-
         #region Html Helpers
 
         /// <summary>

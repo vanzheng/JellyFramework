@@ -81,8 +81,9 @@ namespace Jelly.Web
                         {
                             string path = IOUtils.EnsurePathEndSlash(relativeUploadPath);
                             SiteUtils.CreateFolders(path);
-                            uploadInfo.SavePath = SiteUtils.GetFullName(path + uploadInfo.FileName);
-                            postedFile.SaveAs(HttpContext.Current.Server.MapPath(uploadInfo.SavePath));
+                            uploadInfo.RelativeUploadPath = path;
+                            uploadInfo.SavePath = SiteUtils.MapPath(path + uploadInfo.FileName);
+                            postedFile.SaveAs(uploadInfo.SavePath);
                             uploadInfo.IsSucceed = true;
                             uploadInfo.ErrorCode = UploadFileErrorCode.Succeed;
                         }
