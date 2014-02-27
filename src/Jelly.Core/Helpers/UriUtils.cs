@@ -5,7 +5,10 @@ using Jelly.Extensions;
 
 namespace Jelly.Helpers
 {
-    public class UriUtils
+    /// <summary>
+    /// Uri Helper class.
+    /// </summary>
+    public static class UriUtils
     {
         public static string BuildQueryString(NameValueCollection queryStrings)
         {
@@ -35,7 +38,7 @@ namespace Jelly.Helpers
 
         /// <summary>
         /// Append url a query delimiter.
-        /// </summar>
+        /// </summary>
         public static string AppendQueryDelimiter(string url)
         {
             ExceptionManager.ThrowIfEmpty(url, "url");
