@@ -12,6 +12,7 @@ namespace Jelly.Database
     /// </summary>
     public abstract class DbConnectionManager : IDisposable
     {
+        private bool _disposed = false;
         private DbProviderFactory _dbProviderFactory = null;
         private DbConnection _dbConnection = null;
         private DbTransaction _dbTransaction = null;
@@ -467,17 +468,31 @@ namespace Jelly.Database
             _dbTransaction.Rollback();
         }
 
-        public void Dispose()
+        protected void Dispose(bool disposing) 
         {
-            if (_dbTransaction != null) 
+            if (!this._disposed) 
             {
-                _dbTransaction.Dispose();
+                if (disposing) 
+                {
+                    if (_dbTransaction != null)
+                    {
+                        _dbTransaction.Dispose();
+                    }
+
+                    if (_dbConnection != null)
+                    {
+                        _dbConnection.Dispose();
+                    }
+                }
             }
 
-            if (_dbConnection != null)
-            {
-                _dbConnection.Dispose();
-            }
+            this._disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
