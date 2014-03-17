@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Jelly.Web")]
-[assembly: AssemblyCopyright("Copyright © ZGB 2010~2013")]
+[assembly: AssemblyCopyright("Copyright © ZGB")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

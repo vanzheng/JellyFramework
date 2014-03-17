@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jelly.Database", "Jelly.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jelly.Core.Tests", "Jelly.Core.Tests\Jelly.Core.Tests.csproj", "{C20282F2-C21D-48E2-B172-95E184FC8F04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jelly.Database.Tests", "Jelly.Database.Tests\Jelly.Database.Tests.csproj", "{A0ED091C-0702-4F0E-9060-9777D37B27AA}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Jelly.vsmdi
@@ -83,6 +85,16 @@ Global
 		{C20282F2-C21D-48E2-B172-95E184FC8F04}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C20282F2-C21D-48E2-B172-95E184FC8F04}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C20282F2-C21D-48E2-B172-95E184FC8F04}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A0ED091C-0702-4F0E-9060-9777D37B27AA}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
