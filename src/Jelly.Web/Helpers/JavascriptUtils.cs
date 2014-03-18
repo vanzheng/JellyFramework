@@ -64,7 +64,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 刷新父窗口
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         public static void RefreshParent(string url)
         {
             string js = @"<script type='text/javascript'>
@@ -88,7 +88,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 打开指定大小的新窗体
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         /// <param name="width"></param>
         /// <param name="heigth"></param>
         /// <param name="top"></param>
@@ -104,7 +104,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 转向指定的Url
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         public static void LocationNewHref(string url)
         {
             string js = @"<script type='text/javascript'>
@@ -117,7 +117,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 打开指定大小位置的模式对话框
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="top"></param>
@@ -212,7 +212,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 刷新父窗口
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         public static void RefreshParent(string url, Page page)
         {
             string js = @"<script type='text/javascript'>
@@ -240,7 +240,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 打开指定大小的新窗体
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         /// <param name="width"></param>
         /// <param name="heigth"></param>
         /// <param name="top"></param>
@@ -257,7 +257,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 转向指定的Url
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         public static void LocationNewHref(string url, Page page)
         {
             string js = @"<script type='text/javascript'>
@@ -272,7 +272,7 @@ namespace Jelly.Web.Helpers
         /// <summary>
         /// 打开指定大小位置的模式对话框
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="html"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="top"></param>

@@ -48,7 +48,12 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ExtendLabel.cs" />
+    <Compile Include="Controls\ExtendLiteral.cs" />
     <Compile Include="Helpers\JavascriptUtils.cs" />
+    <Compile Include="Helpers\ListControlUtils.cs" />
+    <Compile Include="Helpers\ModelBinding.cs" />
+    <Compile Include="Paging\Pagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SiteUtils.cs" />
     <Compile Include="UploadFileManager.cs" />

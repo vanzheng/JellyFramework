@@ -270,6 +270,17 @@ namespace Jelly.Web.Helpers
             }
         }
 
+        public static string BuildQueryUrl(string pageParamName)
+        {
+            string rawurl = HttpContext.Current.Request.RawUrl;
+            if (!string.IsNullOrEmpty(rawurl))
+            {
+                rawurl = Regex.Replace(rawurl, pageParamName + @"=(\d+)?&?", "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            }
+
+            return rawurl;
+        }
+
         public static string RenderFlash(string src, int width, int height)
         {
             StringBuilder sb = new StringBuilder();

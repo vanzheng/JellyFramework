@@ -63,7 +63,7 @@ namespace Jelly.Web
                     if (autoGenerateName)
                     {
                         string randomName = DateTime.Now.ToString("yyyyMMddhhmmssfff") + RandomUtils.GetRandomNumber(10000, 99999).ToString();
-                        uploadInfo.FileName = randomName + ext;
+                        uploadInfo.FileName = randomName + "." + ext;
                     }
                     else 
                     {
