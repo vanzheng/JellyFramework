@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="Configuration\DatabaseErrorLogSettings.cs" />
     <Compile Include="Configuration\DatabaseInfoLogSettings.cs" />
-    <Compile Include="Configuration\DatabaseLogSettings.cs" />
     <Compile Include="Configuration\DatabaseSection.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DbConnectionManager.cs" />

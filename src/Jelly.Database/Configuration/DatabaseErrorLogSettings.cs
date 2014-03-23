@@ -9,13 +9,15 @@ namespace Jelly.Database.Configuration
         {
             get
             {
-                return bool.Parse((string)this["enabled"]);
+                return (bool)this["enabled"];
             }
-            set { this["enabled"] = value; }
+            set 
+            { 
+                this["enabled"] = value; 
+            }
         }
 
         [ConfigurationProperty("path", IsRequired = true)]
-        [RegexStringValidator(@"[^~/\].+")]
         public string LogPath
         {
             get

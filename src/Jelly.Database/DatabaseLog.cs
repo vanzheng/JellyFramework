@@ -12,22 +12,24 @@ namespace Jelly.Database
 {
     public class DatabaseLog
     {
-        private static readonly DatabaseSection section = ConfigurationManager.GetSection("Jelly.Database") as DatabaseSection;
+        private static DatabaseSection section = null;
         private static DatabaseInfoLogSettings InfoLogSettings = null;
         private static DatabaseErrorLogSettings ErrorLogSettings = null;
 
         static DatabaseLog() 
         {
-            if (section.Log != null)
+            section = ConfigurationManager.GetSection("JellyDatabase") as DatabaseSection;
+
+            if (section != null)
             {
-                InfoLogSettings = section.Log.InfoLog;
-                ErrorLogSettings = section.Log.ErrorLog;
+                InfoLogSettings = section.InfoLog;
+                ErrorLogSettings = section.ErrorLog;
             }
         }
 
         private static string GetFullLogPath(string path, string pattern)
         {
-            if (string.IsNullOrWhiteSpace(pattern))
+            if (!string.IsNullOrWhiteSpace(pattern))
             {
                 path = Regex.Replace(path, "{pattern}", DateTime.Now.ToString(pattern), RegexOptions.IgnoreCase);
             }
@@ -35,7 +37,7 @@ namespace Jelly.Database
             string fullPath = IOUtils.GetFullPath(path);
             if (!Directory.Exists(fullPath)) 
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(IOUtils.GetFullDirectoryName(fullPath));
             }
             
             return fullPath;
@@ -62,20 +64,28 @@ namespace Jelly.Database
             {
                 builder.AppendLine("/* Parameters Table */");
                 builder.AppendLine(String.Concat(new string[] { 
-                                "Name", 
-                                "DbType".PadRight(50), 
-                                "Size".PadRight(15), 
+                                "Name".PadRight(30),
+                                "DbType".PadRight(15),
+                                "Size".PadRight(10),
+                                "IsNullable".PadRight(15),
+                                "SourceColumn".PadRight(20),
+                                "SourceColumnNullMapping".PadRight(30),
+                                "SourceVersion".PadRight(15),
                                 "Direction".PadRight(15), 
-                                "Value".PadRight(20)}));
+                                "Value"}));
 
                 foreach (DbParameter parameter in command.Parameters)
                 {
                     builder.AppendLine(String.Concat(new string[] { 
-                                    parameter.ParameterName,
-                                    parameter.DbType.ToString().PadRight(50),
-                                    parameter.Size.ToString().PadRight(15),
+                                    parameter.ParameterName.PadRight(30),
+                                    parameter.DbType.ToString().PadRight(15),
+                                    parameter.Size.ToString().PadRight(10),
+                                    parameter.IsNullable.ToString().PadRight(15),
+                                    parameter.SourceColumn.PadRight(20),
+                                    parameter.SourceColumnNullMapping.ToString().PadRight(30),
+                                    parameter.SourceVersion.ToString().PadRight(15),
                                     parameter.Direction.ToString().PadRight(15),
-                                    parameter.Value.ToString().PadRight(20)}));
+                                    parameter.Value.ToString()}));
                 }
             }
 

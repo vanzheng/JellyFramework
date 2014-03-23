@@ -12,7 +12,6 @@ namespace Jelly.Database
     {
         private const string DefaultConnectionStringName = "DefaultConnectionStringNodeName";
         private static readonly NameValueCollection appSettings = ConfigurationManager.AppSettings;
-        private static CacheManager<string, DbConnectionManager> cachedConnection = new CacheManager<string, DbConnectionManager>();
         private static CacheManager<string, ConnectionStringSettings> cachedSettings = new CacheManager<string, ConnectionStringSettings>();
 
         /// <summary>
@@ -42,14 +41,7 @@ namespace Jelly.Database
                 cachedSettings.Insert(connstrNodeName, settings);
             }
 
-            // Search DbConnectionManager object in cache.
-            if (cachedConnection[settings.ConnectionString] != null) 
-            {
-                return cachedConnection[settings.ConnectionString];
-            }
-
             DbConnectionManager connection = (DbConnectionManager)Activator.CreateInstance(Type.GetType(GetConnectionTypeName(settings)), new object[] { settings });
-            cachedConnection[settings.ConnectionString] = connection;
             return connection;
         }
 

@@ -3,21 +3,33 @@
 namespace Jelly.Database.Configuration
 {
     /// <summary>
-    /// Represent the config file database section.
+    /// Represent the config file database DbSection.
     /// </summary>
     public class DatabaseSection : ConfigurationSection
     {
-        public DatabaseSection() 
+        [ConfigurationProperty("errorLog")]
+        public DatabaseErrorLogSettings ErrorLog
         {
-        
+            get
+            {
+                return (DatabaseErrorLogSettings)this["errorLog"];
+            }
+            set
+            {
+                this["errorLog"] = value;
+            }
         }
 
-        [ConfigurationProperty("log")]
-        public DatabaseLogSettings Log 
+        [ConfigurationProperty("infoLog")]
+        public DatabaseInfoLogSettings InfoLog
         {
-            get 
+            get
             {
-                return (DatabaseLogSettings)base["log"];
+                return (DatabaseInfoLogSettings)this["infoLog"];
+            }
+            set
+            {
+                this["infoLog"] = value;
             }
         }
     }

@@ -46,6 +46,23 @@ namespace Jelly.Helpers
             return fullPath;
         }
 
+        public static string GetFullDirectoryName(string path) 
+        {
+            ExceptionManager.ThrowIfNull(path, "The page is invalid");
+
+            string fullPath = GetFullPath(path);
+            string ext = Path.GetExtension(fullPath);
+
+            if (string.IsNullOrEmpty(ext))
+            {
+                return fullPath;
+            }
+            else 
+            {
+                return Path.GetDirectoryName(fullPath);
+            }
+        }
+
         public static string EnsurePathEndSlash(string path) 
         {
             ExceptionManager.ThrowIfEmpty(path, "The path is invalid");
