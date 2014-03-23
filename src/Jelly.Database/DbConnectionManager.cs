@@ -189,7 +189,7 @@ namespace Jelly.Database
         public void AddInParameter(DbCommand command, string parameterName, object value)
         {
             DbParameter parameter = CreateParameter();
-            parameter.ParameterName = parameterName;
+            parameter.ParameterName = EnsureParameterPrefix(parameterName);
             parameter.Value = value ?? DBNull.Value;
             command.Parameters.Add(parameter);
         }
