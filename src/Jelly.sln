@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E98DEA55-0F0A-4C3D-879F-E2657F822694}"
 	ProjectSection(SolutionItems) = preProject
 		DatabaseConfig.xml = DatabaseConfig.xml
