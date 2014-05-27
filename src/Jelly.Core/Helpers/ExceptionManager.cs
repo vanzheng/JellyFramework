@@ -2,8 +2,16 @@
 
 namespace Jelly.Helpers
 {
-    public class ExceptionManager
+    /// <summary>
+    /// The simplified exception manager. 
+    /// </summary>
+    public static class ExceptionManager
     {
+        /// <summary>
+        /// If the input parameter is null, throws <see cref="ArgumentNullException"/>.
+        /// </summary>
+        /// <param name="obj">The input object.</param>
+        /// <param name="message">The exception message.</param>
         public static void ThrowIfNull(object obj, string message)
         {
             if (obj == null)
@@ -12,6 +20,11 @@ namespace Jelly.Helpers
             }
         }
 
+        /// <summary>
+        /// If the input parameter is null, throws exception.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Exception"/> inherited from.</typeparam>
+        /// <param name="obj">The input object.</param>
         public static void ThrowIfNull<T>(object obj) where T : Exception, new() 
         {
             if (obj == null) 
@@ -20,7 +33,12 @@ namespace Jelly.Helpers
             }
         }
 
-        public static void ThrowIfEmpty(string str, string message) 
+        /// <summary>
+        /// If the input parameter is null or empty, throws ArgumentNullException.
+        /// </summary>
+        /// <param name="str">The input string.</param>
+        /// <param name="message">The exception message.</param>
+        public static void ThrowIfNullOrEmpty(string str, string message) 
         {
             if (string.IsNullOrWhiteSpace(str))
             {
@@ -28,7 +46,12 @@ namespace Jelly.Helpers
             }
         }
 
-        public static void ThrowIfEmpty(string str)
+        /// <summary>
+        /// If the input parameter is null or empty, throws ArgumentNullException.
+        /// </summary>
+        /// <param name="str">The input string.</param>
+        /// <param name="message">The exception message.</param>
+        public static void ThrowIfNullOrEmpty(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
             {

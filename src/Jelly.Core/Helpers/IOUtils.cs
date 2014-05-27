@@ -65,7 +65,7 @@ namespace Jelly.Helpers
 
         public static string EnsurePathEndSlash(string path) 
         {
-            ExceptionManager.ThrowIfEmpty(path, "The path is invalid");
+            ExceptionManager.ThrowIfNullOrEmpty(path, "The path is invalid");
 
             if (!path.EndsWith("/")) 
             {
