@@ -21,6 +21,18 @@ namespace Jelly.Helpers
         }
 
         /// <summary>
+        /// If the input parameter is null, throws <see cref="ArgumentNullException"/>.
+        /// </summary>
+        /// <param name="obj">The input object.</param>
+        public static void ThrowIfNull(object obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException();
+            }
+        }
+
+        /// <summary>
         /// If the input parameter is null, throws exception.
         /// </summary>
         /// <typeparam name="T">The <see cref="Exception"/> inherited from.</typeparam>

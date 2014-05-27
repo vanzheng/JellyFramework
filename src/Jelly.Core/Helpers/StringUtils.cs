@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Jelly.Helpers
@@ -176,6 +177,26 @@ namespace Jelly.Helpers
             }
 
             return total;
+        }
+
+        /// <summary>
+        /// Byte array conver to hexadecimal string.
+        /// </summary>
+        /// <param name="byteInput"></param>
+        /// <returns></returns>
+        public static string ToHexString(byte[] byteInput) 
+        {
+            ExceptionManager.ThrowIfNull(byteInput);
+
+            int len = byteInput.Length;
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < len; i++)
+            {
+                builder.Append(byteInput[i].ToString("X2"));
+            }
+
+            return builder.ToString();
         }
     }
 }
