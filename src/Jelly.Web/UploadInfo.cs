@@ -8,11 +8,11 @@ namespace Jelly.Web
         public string FileName { get; set; }
         public string RelativeUploadPath { get; set; }
         public string SavePath { get; set; }
-        public UploadFileErrorCode ErrorCode { get; set; }
+        public UploadFileStatusCode StatusCode { get; set; }
         public string ExceptionMessage { get; set; }
     }
 
-    public enum UploadFileErrorCode
+    public enum UploadFileStatusCode
     {
         Succeed,
         ExceedMaxSize,

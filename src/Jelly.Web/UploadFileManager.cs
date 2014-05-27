@@ -52,7 +52,7 @@ namespace Jelly.Web
                 if (uploadInfo.FileSize > maxSize)
                 {
                     uploadInfo.IsSucceed = false;
-                    uploadInfo.ErrorCode = UploadFileErrorCode.ExceedMaxSize;
+                    uploadInfo.StatusCode = UploadFileStatusCode.ExceedMaxSize;
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Jelly.Web
                     if (!CheckFileExt(ext, allowedExts))
                     {
                         uploadInfo.IsSucceed = false;
-                        uploadInfo.ErrorCode = UploadFileErrorCode.NotAllowedFileType;
+                        uploadInfo.StatusCode = UploadFileStatusCode.NotAllowedFileType;
                     }
                     else
                     {
@@ -85,12 +85,12 @@ namespace Jelly.Web
                             uploadInfo.SavePath = SiteUtils.MapPath(path + uploadInfo.FileName);
                             postedFile.SaveAs(uploadInfo.SavePath);
                             uploadInfo.IsSucceed = true;
-                            uploadInfo.ErrorCode = UploadFileErrorCode.Succeed;
+                            uploadInfo.StatusCode = UploadFileStatusCode.Succeed;
                         }
                         catch (Exception ex) 
                         {
                             uploadInfo.IsSucceed = false;
-                            uploadInfo.ErrorCode = UploadFileErrorCode.Unknow;
+                            uploadInfo.StatusCode = UploadFileStatusCode.Unknow;
                             uploadInfo.ExceptionMessage = ex.Message;
                         }
                     }
@@ -99,7 +99,7 @@ namespace Jelly.Web
             else 
             {
                 uploadInfo.IsSucceed = false;
-                uploadInfo.ErrorCode = UploadFileErrorCode.UploadFileNotFound;
+                uploadInfo.StatusCode = UploadFileStatusCode.UploadFileNotFound;
             }
 
             return uploadInfo;
