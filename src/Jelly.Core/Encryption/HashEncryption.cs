@@ -8,7 +8,7 @@ namespace Jelly.Encryption
     /// <summary>
     /// Hash Encryption.
     /// </summary>
-    public static class Hash
+    public static class HashEncryption
     {
         /// <summary>
         /// Hash Encrypt a string.
