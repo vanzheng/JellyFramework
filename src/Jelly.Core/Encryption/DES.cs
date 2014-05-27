@@ -1,65 +1,90 @@
 using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Jelly.Helpers;
 
 namespace Jelly.Encryption
 {
-    public class DES
+    /// <summary>
+    /// The DES encryption.
+    /// </summary>
+    public static class DES
     {
-        #region DESEncrypt DES加密
         /// <summary>
-        /// 进行DES加密。
+        /// Encrypt a string.
         /// </summary>
-        /// <param name="pToEncrypt">要加密的字符串。</param>
-        /// <param name="sKey">密钥，且必须为8位。</param>
-        /// <returns>以Base64格式返回的加密字符串。</returns>
-        public static string Encrypt(string pToEncrypt, string sKey)
+        /// <param name="input">The encrypted string.</param>
+        /// <param name="key">The secret key, must be 8 characters (64 bit).</param>
+        /// <returns>The Base64 string.</returns>
+        public static string Encrypt(string input, string key)
         {
-            using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
-            {
-                byte[] inputByteArray = Encoding.UTF8.GetBytes(pToEncrypt);
-                des.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
-                System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))
-                {
-                    cs.Write(inputByteArray, 0, inputByteArray.Length);
-                    cs.FlushFinalBlock();
-                    cs.Close();
-                }
-                string str = Convert.ToBase64String(ms.ToArray());
-                ms.Close();
-                return str;
-            }
-        }
-        #endregion
+            Validate(input, key);
 
-        #region DESDecrypt DES解密
-        /// <summary>
-        /// 进行DES解密。
-        /// </summary>
-        /// <param name="pToDecrypt">要解密的以Base64</param>
-        /// <param name="sKey">密钥，且必须为8位。</param>
-        /// <returns>已解密的字符串。</returns>
-        public static string Decrypt(string pToDecrypt, string sKey)
-        {
-            byte[] inputByteArray = Convert.FromBase64String(pToDecrypt);
+            string result;
+
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
-                System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))
+                byte[] inputByteArray = Encoding.UTF8.GetBytes(input);
+                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
+                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    cs.Write(inputByteArray, 0, inputByteArray.Length);
-                    cs.FlushFinalBlock();
-                    cs.Close();
+                    using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(inputByteArray, 0, inputByteArray.Length);
+                        cs.FlushFinalBlock();
+                    }
+
+                    result = Convert.ToBase64String(ms.ToArray());
                 }
-                string str = Encoding.UTF8.GetString(ms.ToArray());
-                ms.Close();
-                return str;
+            }
+
+            return result;
+        }
+        
+        /// <summary>
+        /// Decrypt a string.
+        /// </summary>
+        /// <param name="encryptedString">The encrypted string.</param>
+        /// <param name="key">The secret key, must be 8 characters (64 bit).</param>
+        /// <returns>The decrypted string.</returns>
+        public static string Decrypt(string encryptedString, string key)
+        {
+            Validate(encryptedString, key);
+
+            string result;
+            byte[] inputByteArray = Convert.FromBase64String(encryptedString);
+
+            using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
+            {
+                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
+                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(inputByteArray, 0, inputByteArray.Length);
+                        cs.FlushFinalBlock();
+                    }
+
+                    result = Encoding.UTF8.GetString(ms.ToArray());
+                }
+            }
+
+            return result;
+        }
+
+        private static void Validate(string input, string key) 
+        {
+            ExceptionManager.ThrowIfNullOrEmpty(input);
+            ExceptionManager.ThrowIfNullOrEmpty(key);
+
+            if (key.Length < 8)
+            {
+                throw new Exception("The key must be 8 characters.");
             }
         }
-        #endregion
     }
 }

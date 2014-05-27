@@ -46,6 +46,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelpersTest\DESTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HelpersTest\ArrayUtilsTest.cs" />
     <Compile Include="HelpersTest\FormatterTest.cs" />
