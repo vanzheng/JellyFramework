@@ -14,9 +14,9 @@ namespace Jelly.Encryption
         /// Hash Encrypt a string.
         /// </summary>
         /// <param name="input">The input string.</param>
-        /// <param name="mode">The <see cref="EncryptionHashMode"/> enum.</param>
+        /// <param name="mode">The <see cref="HashAlgorithmType"/> enum.</param>
         /// <returns>The encrypted hash string.</returns>
-        public static string Encrypt(string input, EncryptionHashMode mode) 
+        public static string Encrypt(string input, HashAlgorithmType mode) 
         {
             ExceptionManager.ThrowIfNullOrEmpty(input);
 
@@ -25,19 +25,19 @@ namespace Jelly.Encryption
 
             switch (mode) 
             {
-                case EncryptionHashMode.MD5:
+                case HashAlgorithmType.MD5:
                     result = CalculateHash(new MD5CryptoServiceProvider(), utf8Bytes);
                     break;
-                case EncryptionHashMode.SHA1:
+                case HashAlgorithmType.SHA1:
                     result = CalculateHash(new SHA1CryptoServiceProvider(), utf8Bytes);
                     break;
-                case EncryptionHashMode.SHA256:
+                case HashAlgorithmType.SHA256:
                     result = CalculateHash(new SHA256CryptoServiceProvider(), utf8Bytes);
                     break;
-                case EncryptionHashMode.SHA384:
+                case HashAlgorithmType.SHA384:
                     result = CalculateHash(new SHA384CryptoServiceProvider(), utf8Bytes);
                     break;
-                case EncryptionHashMode.SHA512:
+                case HashAlgorithmType.SHA512:
                     result = CalculateHash(new SHA512CryptoServiceProvider(), utf8Bytes);
                     break;
                 default:
@@ -48,14 +48,17 @@ namespace Jelly.Encryption
             return result;
         }
 
-        public static string CalculateHash(HashAlgorithm algorithm, byte[] input) 
+        private static string CalculateHash(HashAlgorithm algorithm, byte[] input) 
         {
             var data = algorithm.ComputeHash(input);
             return StringUtils.ToHexString(data);
         } 
     }
 
-    public enum EncryptionHashMode 
+    /// <summary>
+    /// The Hash Algorithm Type.
+    /// </summary>
+    public enum HashAlgorithmType 
     {
         MD5,
         SHA1,
