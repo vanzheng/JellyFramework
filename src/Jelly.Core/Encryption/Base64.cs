@@ -11,7 +11,7 @@ namespace Jelly.Encryption
         /// <summary>
         /// Decrypt a string.
         /// </summary>
-        /// <param name="utf8Str">The utf-8 string.</param>
+        /// <param name="utf8Str">The base64 string.</param>
         /// <returns>The Base64 string.</returns>
         public static string Decrypt(string base64Str)
         {

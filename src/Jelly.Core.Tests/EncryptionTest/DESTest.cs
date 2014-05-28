@@ -2,7 +2,7 @@
 using Jelly.Encryption;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jelly.Tests.HelpersTest
+namespace Jelly.Tests.EncryptionTest
 {
     [TestClass]
     public class DESTest
