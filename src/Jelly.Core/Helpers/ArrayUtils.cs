@@ -2,8 +2,18 @@
 
 namespace Jelly.Helpers
 {
+    /// <summary>
+    /// The Array helper.
+    /// </summary>
     public static class ArrayUtils
     {
+        /// <summary>
+        /// Combin tow array into one array.
+        /// </summary>
+        /// <typeparam name="T">The generic type.</typeparam>
+        /// <param name="oneArray">The first array.</param>
+        /// <param name="twoArray">The second array.</param>
+        /// <returns>The combined array.</returns>
         public static T[] Combin<T>(T[] oneArray, T[] twoArray) 
         {
             if (oneArray == null && twoArray == null) 

@@ -1,5 +1,4 @@
 ﻿using Jelly.Encryption;
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jelly.Tests.EncryptionTest
