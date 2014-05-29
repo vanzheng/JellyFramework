@@ -277,8 +277,13 @@ namespace Jelly.Encryption
             return strhex;
         }
 
-
-        public static string Encrypt(string sMessage, int stype)
+        /// <summary>
+        /// MD5 Encrypt a string
+        /// </summary>
+        /// <param name="input">The input string</param>
+        /// <param name="md5Length">The <see cref="MD5Length"/> enum.</param>
+        /// <returns>The 16 or 32 length hex string.</returns>
+        public static string Encrypt(string input, MD5Length md5Length)
         {
             string md5 = String.Empty;
 
@@ -316,7 +321,7 @@ namespace Jelly.Encryption
             const int S43 = 15;
             const int S44 = 21;
 
-            x = ConvertToWordArray(sMessage);
+            x = ConvertToWordArray(input);
 
             a = 0x67452301;
             b = 0xEFCDAB89;
@@ -401,7 +406,7 @@ namespace Jelly.Encryption
                 d = AddUnsigned(d, DD);
             }
 
-            if (stype == 32)
+            if (md5Length == MD5Length.ThirtyTwo)
             {
                 md5 = ((((WordToHex(a)) + (WordToHex(b))) + (WordToHex(c))) + (WordToHex(d))).ToLower();
             }
@@ -409,8 +414,15 @@ namespace Jelly.Encryption
             {
                 md5 = ((WordToHex(b)) + (WordToHex(c))).ToLower();
             }
+
             return md5;
         }
+    }
+
+    public enum MD5Length 
+    {
+        Sixteen,
+        ThirtyTwo
     }
 }
 
