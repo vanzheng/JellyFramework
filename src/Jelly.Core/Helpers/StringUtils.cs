@@ -9,20 +9,20 @@ namespace Jelly.Helpers
         /// <summary>
         /// Determines whether the string contains white space.
         /// </summary>
-        /// <param name="s">The string to test for white space.</param>
+        /// <param name="input">The string to test for white space.</param>
         /// <returns>
         /// 	<c>true</c> if the string contains white space; otherwise, <c>false</c>.
         /// </returns>
-        public static bool ContainsWhiteSpace(string s)
+        public static bool ContainsWhiteSpace(string input)
         {
-            if (s == null)
+            if (input == null)
             {
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException("input");
             }
 
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (char.IsWhiteSpace(s[i]))
+                if (char.IsWhiteSpace(input[i]))
                 {
                     return true;
                 }
@@ -34,25 +34,25 @@ namespace Jelly.Helpers
         /// <summary>
         /// Determines whether the string is all white space. Empty string will return false.
         /// </summary>
-        /// <param name="s">The string to test whether it is all white space.</param>
+        /// <param name="input">The string to test whether it is all white space.</param>
         /// <returns>
         /// 	<c>true</c> if the string is all white space; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsWhiteSpace(string s)
+        public static bool IsWhiteSpace(string input)
         {
-            if (s == null)
+            if (input == null)
             {
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException("input");
             }
 
-            if (s.Length == 0)
+            if (input.Length == 0)
             {
                 return false;
             }
 
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (!char.IsWhiteSpace(s[i]))
+                if (!char.IsWhiteSpace(input[i]))
                 {
                     return false;
                 }
@@ -64,45 +64,45 @@ namespace Jelly.Helpers
         /// <summary>
         /// Determines whether the string is null or white space.
         /// </summary>
-        /// <param name="s">The string.</param>
+        /// <param name="input">The string.</param>
         /// <returns>
         /// 	<c>true</c> if the SqlString is null or white space; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsNullOrWhiteSpace(string s)
+        public static bool IsNullOrWhiteSpace(string input)
         {
-            if (s == null)
+            if (input == null)
             {
                 return true;
             }
             else
             {
-                return s.Trim() == string.Empty ? true : false;
+                return input.Trim() == string.Empty ? true : false;
             }
         }
 
         /// <summary>
         /// Indents the specified string.
         /// </summary>
-        /// <param name="s">The string to indent.</param>
+        /// <param name="input">The string to indent.</param>
         /// <param name="indentation">The number of characters to indent by.</param>
         /// <returns></returns>
-        public static string Indent(string s, int indentation)
+        public static string Indent(string input, int indentation)
         {
-            return Indent(s, indentation, ' ');
+            return Indent(input, indentation, ' ');
         }
 
         /// <summary>
         /// Indents the specified string.
         /// </summary>
-        /// <param name="s">The string to indent.</param>
+        /// <param name="input">The string to indent.</param>
         /// <param name="indentation">The number of characters to indent by.</param>
         /// <param name="indentChar">The indent character.</param>
         /// <returns></returns>
-        public static string Indent(string s, int indentation, char indentChar)
+        public static string Indent(string input, int indentation, char indentChar)
         {
-            if (s == null)
+            if (input == null)
             {
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException("input");
             }
 
             if (indentation <= 0)
@@ -112,29 +112,34 @@ namespace Jelly.Helpers
 
             string prefix = new String(indentChar, indentation);
 
-            return string.Concat(prefix, s);
+            return string.Concat(prefix, input);
         }
 
         /// <summary>
         /// Truncates the specified string.
         /// </summary>
-        /// <param name="s">The string to truncate.</param>
+        /// <param name="input">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
         /// <returns></returns>
-        public static string Truncate(string s, int maximumLength)
+        public static string Truncate(string input, int maximumLength)
         {
-            return Truncate(s, maximumLength, "...");
+            return Truncate(input, maximumLength, "...");
         }
 
         /// <summary>
         /// Truncates the specified string.
         /// </summary>
-        /// <param name="s">The string to truncate.</param>
+        /// <param name="input">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
         /// <param name="suffix">The suffix to place at the end of the truncated string.</param>
         /// <returns></returns>
-        public static string Truncate(string s, int maximumLength, string suffix)
+        public static string Truncate(string input, int maximumLength, string suffix)
         {
+            if (string.IsNullOrEmpty(input)) 
+            {
+                throw new ArgumentNullException("input");
+            }
+            
             if (suffix == null)
             {
                 throw new ArgumentNullException("suffix");
@@ -145,9 +150,9 @@ namespace Jelly.Helpers
                 throw new ArgumentException("Maximum length must be greater than zero.", "maximumLength");
             }
 
-            if (!IsNullOrWhiteSpace(s) && s.Length > maximumLength)
+            if (!IsNullOrWhiteSpace(input) && input.Length > maximumLength)
             {
-                string truncatedString = s.Substring(0, maximumLength);
+                string truncatedString = input.Substring(0, maximumLength);
                 // incase the last character is a space
                 truncatedString = truncatedString.TrimEnd();
                 truncatedString += suffix;
@@ -156,17 +161,22 @@ namespace Jelly.Helpers
             }
             else
             {
-                return s;
+                return input;
             }
         }
 
-        public static int GetLineNumber(string s) 
+        /// <summary>
+        /// Get the content count line number.
+        /// </summary>
+        /// <param name="content">The content string.</param>
+        /// <returns>The count line number.</returns>
+        public static int GetLineNumber(string content) 
         {
-            ExceptionManager.ThrowIfNull<ArgumentNullException>(s);
+            ExceptionManager.ThrowIfNull<ArgumentNullException>(content);
 
             int total = 1;
             Regex regex = new Regex(@"\r\n", RegexOptions.Compiled | RegexOptions.Multiline);
-            MatchCollection matches = regex.Matches(s);
+            MatchCollection matches = regex.Matches(content);
 
             foreach (Match match in matches) 
             {

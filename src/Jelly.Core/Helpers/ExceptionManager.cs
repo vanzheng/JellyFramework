@@ -48,11 +48,11 @@ namespace Jelly.Helpers
         /// <summary>
         /// If the input parameter is null or empty, throws ArgumentNullException.
         /// </summary>
-        /// <param name="str">The input string.</param>
+        /// <param name="input">The input string.</param>
         /// <param name="message">The exception message.</param>
-        public static void ThrowIfNullOrEmpty(string str, string message) 
+        public static void ThrowIfNullOrEmpty(string input, string message) 
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrWhiteSpace(input))
             {
                 throw new ArgumentNullException(message);
             }
@@ -61,11 +61,11 @@ namespace Jelly.Helpers
         /// <summary>
         /// If the input parameter is null or empty, throws ArgumentNullException.
         /// </summary>
-        /// <param name="str">The input string.</param>
+        /// <param name="input">The input string.</param>
         /// <param name="message">The exception message.</param>
-        public static void ThrowIfNullOrEmpty(string str)
+        public static void ThrowIfNullOrEmpty(string input)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrWhiteSpace(input))
             {
                 throw new ArgumentNullException();
             }

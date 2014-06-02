@@ -23,7 +23,7 @@ namespace Jelly.Helpers
             }
 
             string qs = builder.ToString();
-            if (qs.EndsWith("&"))
+            if (qs.EndsWith("&", StringComparison.OrdinalIgnoreCase))
             {
                 qs = qs.Remove(qs.Length - 1);
             }
