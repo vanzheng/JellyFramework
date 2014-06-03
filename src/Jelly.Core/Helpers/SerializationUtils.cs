@@ -39,7 +39,7 @@ namespace Jelly.Helpers
         /// </summary>
         public static T XmlToObject<T>(XmlReader xmlReader) 
         {
-            ExceptionManager.ThrowIfNull(xmlReader, "xmlReader");
+            ExceptionManager.ThrowIfNull(xmlReader);
 
             XmlSerializer xs = new XmlSerializer(typeof(T));
             T obj = (T)xs.Deserialize(xmlReader);

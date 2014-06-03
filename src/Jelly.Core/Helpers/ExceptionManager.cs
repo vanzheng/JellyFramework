@@ -7,16 +7,31 @@ namespace Jelly.Helpers
     /// </summary>
     public static class ExceptionManager
     {
+
         /// <summary>
         /// If the input parameter is null, throws <see cref="ArgumentNullException"/>.
         /// </summary>
         /// <param name="obj">The input object.</param>
+        /// <param name="paramName">The name of parameter that caused the expection.</param>
         /// <param name="message">The exception message.</param>
-        public static void ThrowIfNull(object obj, string message)
+        public static void ThrowIfNull(object obj, string paramName, string message)
         {
             if (obj == null)
             {
-                throw new ArgumentNullException(message);
+                throw new ArgumentNullException(paramName, message);
+            }
+        }
+
+        /// <summary>
+        /// If the input parameter is null, throws <see cref="ArgumentNullException"/>.
+        /// </summary>
+        /// <param name="obj">The input object.</param>
+        /// <param name="paramName">The name of parameter that caused the expection.</param>
+        public static void ThrowIfNull(object obj, string paramName)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(paramName);
             }
         }
 
@@ -49,12 +64,13 @@ namespace Jelly.Helpers
         /// If the input parameter is null or empty, throws ArgumentNullException.
         /// </summary>
         /// <param name="input">The input string.</param>
+        /// <param name="paramName">The name of parameter that caused the expection.</param>
         /// <param name="message">The exception message.</param>
-        public static void ThrowIfNullOrEmpty(string input, string message) 
+        public static void ThrowIfNullOrEmpty(string input, string paramName, string message)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
-                throw new ArgumentNullException(message);
+                throw new ArgumentNullException(paramName, message);
             }
         }
 
@@ -62,7 +78,19 @@ namespace Jelly.Helpers
         /// If the input parameter is null or empty, throws ArgumentNullException.
         /// </summary>
         /// <param name="input">The input string.</param>
-        /// <param name="message">The exception message.</param>
+        /// <param name="paramName">The name of parameter that caused the expection.</param>
+        public static void ThrowIfNullOrEmpty(string input, string paramName) 
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentNullException(paramName);
+            }
+        }
+
+        /// <summary>
+        /// If the input parameter is null or empty, throws ArgumentNullException.
+        /// </summary>
+        /// <param name="input">The input string.</param>
         public static void ThrowIfNullOrEmpty(string input)
         {
             if (string.IsNullOrWhiteSpace(input))

@@ -4,6 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace Jelly.Helpers
 {
+    /// <summary>
+    /// The String Utility.
+    /// </summary>
     public static class StringUtils
     {
         /// <summary>
@@ -190,7 +193,7 @@ namespace Jelly.Helpers
         }
 
         /// <summary>
-        /// Byte array conver to hexadecimal string.
+        /// Byte array convert to hexadecimal string.
         /// </summary>
         /// <param name="byteInput"></param>
         /// <returns></returns>

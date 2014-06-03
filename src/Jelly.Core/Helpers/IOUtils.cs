@@ -3,13 +3,16 @@ using System.IO;
 
 namespace Jelly.Helpers
 {
+    /// <summary>
+    /// IO Utility.
+    /// </summary>
     public static class IOUtils
     {
         /// <summary>
         /// Gets full path base on current domain base directory.
         /// </summary>
-        /// <param name="fullPath"></param>
-        /// <returns></returns>
+        /// <param name="fullPath">The path.</param>
+        /// <returns>The full path.</returns>
         public static string GetFullPath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
@@ -48,7 +51,7 @@ namespace Jelly.Helpers
 
         public static string GetFullDirectoryName(string path) 
         {
-            ExceptionManager.ThrowIfNull(path, "The page is invalid");
+            ExceptionManager.ThrowIfNull(path);
 
             string fullPath = GetFullPath(path);
             string ext = Path.GetExtension(fullPath);
@@ -63,9 +66,14 @@ namespace Jelly.Helpers
             }
         }
 
+        /// <summary>
+        /// Ensure the path end with slash.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>The end with slash path.</returns>
         public static string EnsurePathEndSlash(string path) 
         {
-            ExceptionManager.ThrowIfNullOrEmpty(path, "The path is invalid");
+            ExceptionManager.ThrowIfNullOrEmpty(path, "path");
 
             if (!path.EndsWith("/")) 
             {

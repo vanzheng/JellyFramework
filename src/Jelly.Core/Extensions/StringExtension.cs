@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using Jelly.Helpers;
 
@@ -10,23 +11,23 @@ namespace Jelly.Extensions
     public static class StringExtension
     {
         /// <summary>
-        /// 将全角数字转换为数字
+        /// Convert SBC case to half-pitch string.
         /// </summary>
-        /// <param name="SBCCase"></param>
-        /// <returns></returns>
-        public static string SBCCaseToNumberic(this string SBCCase)
+        /// <param name="sbcCase">The SBC case string.</param>
+        /// <returns>The half-pitch string.</returns>
+        public static string SBCCaseToNumberic(this string sbcCase)
         {
-            char[] c = SBCCase.ToCharArray();
+            char[] c = sbcCase.ToCharArray();
             for (int i = 0; i < c.Length; i++)
             {
-                byte[] b = System.Text.Encoding.Unicode.GetBytes(c, i, 1);
+                byte[] b = Encoding.Unicode.GetBytes(c, i, 1);
                 if (b.Length == 2)
                 {
                     if (b[1] == 255)
                     {
                         b[0] = (byte)(b[0] + 32);
                         b[1] = 0;
-                        c[i] = System.Text.Encoding.Unicode.GetChars(b)[0];
+                        c[i] = Encoding.Unicode.GetChars(b)[0];
                     }
                 }
             }
@@ -36,22 +37,22 @@ namespace Jelly.Extensions
         /// <summary>
         /// Truncates the specified string.
         /// </summary>
-        /// <param name="s">The string to truncate.</param>
+        /// <param name="input">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
-        /// <returns></returns>
-        public static string Truncate(this string s, int maximumLength)
+        /// <returns>The truncated string.</returns>
+        public static string Truncate(this string input, int maximumLength)
         {
-            return Truncate(s, maximumLength, "...");
+            return Truncate(input, maximumLength, "...");
         }
 
         /// <summary>
         /// Truncates the specified string.
         /// </summary>
-        /// <param name="s">The string to truncate.</param>
+        /// <param name="input">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
         /// <param name="suffix">The suffix to place at the end of the truncated string.</param>
-        /// <returns></returns>
-        public static string Truncate(this string s, int maximumLength, string suffix)
+        /// <returns>The truncated string.</returns>
+        public static string Truncate(this string input, int maximumLength, string suffix)
         {
             if (suffix == null)
             {
@@ -63,9 +64,9 @@ namespace Jelly.Extensions
                 throw new ArgumentException("Maximum length must be greater than zero.", "maximumLength");
             }
 
-            if (!string.IsNullOrWhiteSpace(s) && s.Length > maximumLength)
+            if (!string.IsNullOrWhiteSpace(input) && input.Length > maximumLength)
             {
-                string truncatedString = s.Substring(0, maximumLength);
+                string truncatedString = input.Substring(0, maximumLength);
                 // incase the last character is a space
                 truncatedString = truncatedString.TrimEnd();
                 truncatedString += suffix;
@@ -74,72 +75,96 @@ namespace Jelly.Extensions
             }
             else
             {
-                return s;
+                return input;
             }
         }
 
-        public static bool IsMatch(this string str, string pattern) 
+        /// <summary>
+        /// The string is match with the regex pattern.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="pattern">The regex pattern.</param>
+        /// <returns>
+        ///     <c>true</c> if the string match the pattern; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsMatch(this string input, string pattern) 
         {
-            if (str == null) 
+            if (input == null) 
             {
                 return false;
             }
 
             Regex regex = new Regex(pattern);
-            return regex.IsMatch(str);
+            return regex.IsMatch(input);
         }
 
-        public static bool IsMatch(this string str, string pattern, RegexOptions regexOptions) 
+        /// <summary>
+        /// The string is match with the regex pattern.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="pattern">The regex pattern.</param>
+        /// <param name="regexOptions">The <see cref="RegexOptions"/> enum.</param>
+        /// <returns>
+        ///     <c>true</c> if the string match the pattern; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsMatch(this string input, string pattern, RegexOptions regexOptions) 
         {
-            if (str == null)
+            if (input == null)
             {
                 return false;
             }
 
             Regex regex = new Regex(pattern, regexOptions);
-            return regex.IsMatch(str);
+            return regex.IsMatch(input);
         }
 
-        public static string ReplaceArray(this string str, char[] oldChar, char newChar) 
+        /// <summary>
+        /// Replace old character to new character.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="oldChar"></param>
+        /// <param name="newChar"></param>
+        /// <returns></returns>
+        public static string ReplaceArray(this string input, char[] oldChar, char newChar) 
         {
-            if (str == null) 
+            if (input == null) 
             {
                 return null;
             }
 
             if (oldChar == null || oldChar.Length == 0) 
             {
-                return str;
+                return input;
             }
 
             int len = oldChar.Length;
             for (int i = 0; i < len; i++) 
             {
-                str.Replace(oldChar[i], newChar);
+                input.Replace(oldChar[i], newChar);
             }
 
-            return str;
+            return input;
         }
 
-        public static string ReplaceArray(this string str, string[] oldString, string newString)
+        public static string ReplaceArray(this string input, string[] oldString, string newString)
         {
-            if (str == null)
+            if (input == null)
             {
                 return null;
             }
 
             if (oldString == null || oldString.Length == 0 || newString == null)
             {
-                return str;
+                return input;
             }
 
             int len = oldString.Length;
             for (int i = 0; i < len; i++)
             {
-                str.Replace(oldString[i], newString);
+                input.Replace(oldString[i], newString);
             }
 
-            return str;
+            return input;
         }
 
         public static bool IsLastWord(this string input, string lastWord)
