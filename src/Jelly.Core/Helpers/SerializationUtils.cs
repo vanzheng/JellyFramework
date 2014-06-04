@@ -39,7 +39,7 @@ namespace Jelly.Helpers
         /// </summary>
         public static T XmlToObject<T>(XmlReader xmlReader) 
         {
-            ExceptionManager.ThrowIfNull(xmlReader);
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(xmlReader);
 
             XmlSerializer xs = new XmlSerializer(typeof(T));
             T obj = (T)xs.Deserialize(xmlReader);
@@ -53,7 +53,7 @@ namespace Jelly.Helpers
         /// <param name="obj">The given specified object.</param>
         public static void ObjectToXml(string savedXmlPath, object obj) 
         {
-            ExceptionManager.ThrowIfNullOrEmpty(savedXmlPath);
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(savedXmlPath);
 
             XmlSerializer serializer = new XmlSerializer(obj.GetType());
             using (Stream stream = new FileStream(savedXmlPath, FileMode.Create)) 

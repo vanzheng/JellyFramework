@@ -31,7 +31,7 @@ namespace Jelly.Extensions
         /// <returns>The generic value.</returns>
         public static T GetValue<T>(this DbDataReader reader, string name) 
         {
-            ExceptionManager.ThrowIfNullOrEmpty(name);
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(name);
 
             int index = reader.GetOrdinal(name);
             return GetValue<T>(reader, index);

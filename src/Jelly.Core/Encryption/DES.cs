@@ -78,13 +78,9 @@ namespace Jelly.Encryption
 
         private static void Validate(string input, string key) 
         {
-            ExceptionManager.ThrowIfNullOrEmpty(input);
-            ExceptionManager.ThrowIfNullOrEmpty(key);
-
-            if (key.Length < 8)
-            {
-                throw new Exception("The key must be 8 characters.");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(input);
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(key);
+            ExceptionManager.ThrowArgumentExceptionIfMeet(key.Length != 8, "key", "The key must be 8 characters.");
         }
     }
 }

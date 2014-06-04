@@ -15,10 +15,7 @@ namespace Jelly.Helpers
         /// <returns>The full path.</returns>
         public static string GetFullPath(string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                throw new ArgumentNullException("path");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(path, "path");
 
             string fullPath = path.Trim();
             if (fullPath.StartsWith("/") || fullPath.StartsWith("\\")) 
@@ -51,7 +48,7 @@ namespace Jelly.Helpers
 
         public static string GetFullDirectoryName(string path) 
         {
-            ExceptionManager.ThrowIfNull(path);
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(path);
 
             string fullPath = GetFullPath(path);
             string ext = Path.GetExtension(fullPath);
@@ -73,7 +70,7 @@ namespace Jelly.Helpers
         /// <returns>The end with slash path.</returns>
         public static string EnsurePathEndSlash(string path) 
         {
-            ExceptionManager.ThrowIfNullOrEmpty(path, "path");
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(path, "path");
 
             if (!path.EndsWith("/")) 
             {

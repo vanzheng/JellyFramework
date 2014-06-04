@@ -199,7 +199,7 @@ namespace Jelly.Helpers
         /// <returns></returns>
         public static string ToHexString(byte[] byteInput) 
         {
-            ExceptionManager.ThrowIfNull(byteInput);
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(byteInput);
 
             int len = byteInput.Length;
             StringBuilder builder = new StringBuilder();

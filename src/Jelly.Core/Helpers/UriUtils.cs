@@ -41,7 +41,7 @@ namespace Jelly.Helpers
         /// </summary>
         public static string AppendQueryDelimiter(string url)
         {
-            ExceptionManager.ThrowIfNullOrEmpty(url, "url");
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(url, "url");
 
             if (url.Contains("?"))
             {

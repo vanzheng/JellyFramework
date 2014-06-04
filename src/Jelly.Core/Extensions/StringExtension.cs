@@ -54,15 +54,8 @@ namespace Jelly.Extensions
         /// <returns>The truncated string.</returns>
         public static string Truncate(this string input, int maximumLength, string suffix)
         {
-            if (suffix == null)
-            {
-                throw new ArgumentNullException("suffix");
-            }
-
-            if (maximumLength <= 0)
-            {
-                throw new ArgumentException("Maximum length must be greater than zero.", "maximumLength");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(suffix, "suffix");
+            ExceptionManager.ThrowArgumentExceptionIfMeet(maximumLength <= 0, "maximumLength", "Maximum length must be greater than zero.");
 
             if (!string.IsNullOrWhiteSpace(input) && input.Length > maximumLength)
             {
@@ -119,13 +112,13 @@ namespace Jelly.Extensions
         }
 
         /// <summary>
-        /// Replace old character to new character.
+        /// Replace old character array to new character arry.
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="oldChar"></param>
-        /// <param name="newChar"></param>
-        /// <returns></returns>
-        public static string ReplaceArray(this string input, char[] oldChar, char newChar) 
+        /// <param name="input">The input string.</param>
+        /// <param name="oldChar">The old character array.</param>
+        /// <param name="newChar">The new character arry.</param>
+        /// <returns>The replaced string.</returns>
+        public static string Replace(this string input, char[] oldChar, char newChar) 
         {
             if (input == null) 
             {
@@ -146,7 +139,14 @@ namespace Jelly.Extensions
             return input;
         }
 
-        public static string ReplaceArray(this string input, string[] oldString, string newString)
+        /// <summary>
+        /// Replace old string array to new string arry.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="oldChar">The old string array.</param>
+        /// <param name="newChar">The new string arry.</param>
+        /// <returns>The replaced string.</returns>
+        public static string Replace(this string input, string[] oldString, string newString)
         {
             if (input == null)
             {
@@ -167,19 +167,35 @@ namespace Jelly.Extensions
             return input;
         }
 
+        /// <summary>
+        /// Identify the whether the input parameter is last word.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="lastWord">The last word string.</param>
+        /// <returns>
+        ///     <c>true</c>, the input parameter is match last word, otherwise <c>false</c>.
+        /// </returns>
         public static bool IsLastWord(this string input, string lastWord)
         {
-            ExceptionManager.ThrowIfNull(input, "input");
-            ExceptionManager.ThrowIfNull(lastWord, "lastWord");
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(lastWord, "lastWord");
 
             int wordLength = lastWord.Length;
             return input.LastIndexOf(lastWord) == input.Length - wordLength;
         }
 
+        /// <summary>
+        /// Identify the whether the input parameter is last word.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="lastWord">The last word char.</param>
+        /// <returns>
+        ///     <c>true</c>, the input parameter is match last word, otherwise <c>false</c>.
+        /// </returns>
         public static bool IsLastWord(this string input, char lastWord)
         {
-            ExceptionManager.ThrowIfNull(input, "input");
-            ExceptionManager.ThrowIfNull(lastWord, "lastWord");
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(lastWord, "lastWord");
 
             return input.LastIndexOf(lastWord) == input.Length - 1;
         }

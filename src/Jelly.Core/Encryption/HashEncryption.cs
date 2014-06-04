@@ -18,7 +18,7 @@ namespace Jelly.Encryption
         /// <returns>The encrypted hash string.</returns>
         public static string Encrypt(string input, HashAlgorithmType mode) 
         {
-            ExceptionManager.ThrowIfNullOrEmpty(input);
+            ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(input);
 
             byte[] utf8Bytes = Encoding.UTF8.GetBytes(input);            
             string result;
