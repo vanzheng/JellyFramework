@@ -61,14 +61,27 @@ namespace Jelly.Helpers
         }
 
         /// <summary>
+        /// If the input parameter is null, throws exception.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Exception"/> inherited from.</typeparam>
+        /// <param name="obj">The condition for meets.</param>
+        public static void ThrowIfNull<T>(bool condition) where T : Exception, new()
+        {
+            if (condition)
+            {
+                throw new T();
+            }
+        }
+
+        /// <summary>
         /// If meets the condition, throws <see cref="ArgumentException"/>.
         /// </summary>
-        /// <param name="meet">The condition for meets.</param>
+        /// <param name="condition">The condition for meets.</param>
         /// <param name="paramName">The name of parameter that caused the expection.</param>
         /// <param name="message">The exception message.</param>
-        public static void ThrowArgumentExceptionIfMeet(bool meet, string paramName, string message)
+        public static void ThrowArgumentExceptionIfMeet(bool condition, string paramName, string message)
         {
-            if (meet)
+            if (condition)
             {
                 throw new ArgumentException(message, paramName);
             }
@@ -77,11 +90,11 @@ namespace Jelly.Helpers
         /// <summary>
         /// If meets the condition, throws <see cref="ArgumentException"/>.
         /// </summary>
-        /// <param name="meet">The condition for meets.</param>
+        /// <param name="condition">The condition for meets.</param>
         /// <param name="message">The exception message.</param>
-        public static void ThrowArgumentExceptionIfMeet(bool meet, string message)
+        public static void ThrowArgumentExceptionIfMeet(bool condition, string message)
         {
-            if (meet)
+            if (condition)
             {
                 throw new ArgumentException(message);
             }
@@ -90,10 +103,10 @@ namespace Jelly.Helpers
         /// <summary>
         /// If meets the condition, throws <see cref="ArgumentException"/>.
         /// </summary>
-        /// <param name="meet">The condition for meets.</param>
-        public static void ThrowArgumentExceptionIfMeet(bool meet)
+        /// <param name="condition">The condition for meets.</param>
+        public static void ThrowArgumentExceptionIfMeet(bool condition)
         {
-            if (meet)
+            if (condition)
             {
                 throw new ArgumentException();
             }
