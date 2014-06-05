@@ -18,14 +18,11 @@ namespace Jelly.Helpers
         /// </returns>
         public static bool ContainsWhiteSpace(string input)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
 
-            for (int i = 0; i < input.Length; i++)
+            foreach (char c in input) 
             {
-                if (char.IsWhiteSpace(input[i]))
+                if (char.IsWhiteSpace(c))
                 {
                     return true;
                 }
@@ -41,21 +38,18 @@ namespace Jelly.Helpers
         /// <returns>
         /// 	<c>true</c> if the string is all white space; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsWhiteSpace(string input)
+        public static bool IsAllWhiteSpace(string input)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
 
             if (input.Length == 0)
             {
                 return false;
             }
 
-            for (int i = 0; i < input.Length; i++)
+            foreach (char c in input) 
             {
-                if (!char.IsWhiteSpace(input[i]))
+                if (!char.IsWhiteSpace(c))
                 {
                     return false;
                 }
@@ -88,7 +82,7 @@ namespace Jelly.Helpers
         /// </summary>
         /// <param name="input">The string to indent.</param>
         /// <param name="indentation">The number of characters to indent by.</param>
-        /// <returns></returns>
+        /// <returns>The indented string.</returns>
         public static string Indent(string input, int indentation)
         {
             return Indent(input, indentation, ' ');
@@ -100,18 +94,11 @@ namespace Jelly.Helpers
         /// <param name="input">The string to indent.</param>
         /// <param name="indentation">The number of characters to indent by.</param>
         /// <param name="indentChar">The indent character.</param>
-        /// <returns></returns>
+        /// <returns>The indented string.</returns>
         public static string Indent(string input, int indentation, char indentChar)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException("input");
-            }
-
-            if (indentation <= 0)
-            {
-                throw new ArgumentException("Must be greater than zero.", "indentation");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
+            ExceptionManager.ThrowArgumentExceptionIfMeet(indentation <= 0, "indentation", "Must be greater than zero.");
 
             string prefix = new String(indentChar, indentation);
 
@@ -123,7 +110,7 @@ namespace Jelly.Helpers
         /// </summary>
         /// <param name="input">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
-        /// <returns></returns>
+        /// <returns>The truncated string.</returns>
         public static string Truncate(string input, int maximumLength)
         {
             return Truncate(input, maximumLength, "...");
@@ -135,23 +122,12 @@ namespace Jelly.Helpers
         /// <param name="input">The string to truncate.</param>
         /// <param name="maximumLength">The maximum length of the string before it is truncated.</param>
         /// <param name="suffix">The suffix to place at the end of the truncated string.</param>
-        /// <returns></returns>
+        /// <returns>The truncated string.</returns>
         public static string Truncate(string input, int maximumLength, string suffix)
         {
-            if (string.IsNullOrEmpty(input)) 
-            {
-                throw new ArgumentNullException("input");
-            }
-            
-            if (suffix == null)
-            {
-                throw new ArgumentNullException("suffix");
-            }
-
-            if (maximumLength <= 0)
-            {
-                throw new ArgumentException("Maximum length must be greater than zero.", "maximumLength");
-            }
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(suffix, "suffix");
+            ExceptionManager.ThrowArgumentExceptionIfMeet(maximumLength <= 0, "maximumLength", "Maximum length must be greater than zero.");
 
             if (!IsNullOrWhiteSpace(input) && input.Length > maximumLength)
             {
@@ -195,8 +171,8 @@ namespace Jelly.Helpers
         /// <summary>
         /// Byte array convert to hexadecimal string.
         /// </summary>
-        /// <param name="byteInput"></param>
-        /// <returns></returns>
+        /// <param name="byteInput">The input byte array.</param>
+        /// <returns>The hex string.</returns>
         public static string ToHexString(byte[] byteInput) 
         {
             ExceptionManager.ThrowArgumentNullExceptionIfNull(byteInput);
