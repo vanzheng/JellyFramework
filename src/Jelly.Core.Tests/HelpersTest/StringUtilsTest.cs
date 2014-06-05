@@ -105,5 +105,14 @@ namespace Jelly.Tests.HelpersTest
             Assert.AreEqual(expected2, actual2);
         }
 
+        [TestMethod]
+        public void RemoveSpecifiedIndexTest() 
+        {
+            string a = "abc1dddd$%";
+            string result = StringUtils.RemoveSpecifiedIndex(a, 3);
+            string expected = "abcdddd$%";
+            Assert.AreEqual(expected, result);
+        }
+
     }
 }

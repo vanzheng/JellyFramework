@@ -187,5 +187,21 @@ namespace Jelly.Helpers
 
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Removes the specified index character.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <param name="index">The character index.</param>
+        /// <returns>The new string that removed specified index.</returns>
+        public static string RemoveSpecifiedIndex(string input, int index) 
+        {
+            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
+            ExceptionManager.ThrowArgumentExceptionIfMeet(index > input.Length - 1, "index", "The index is out of input string lenght");
+
+            string substr = input.Substring(0, index);
+            string endstr = input.Substring(index + 1);
+            return string.Concat(substr, endstr);
+        }
     }
 }

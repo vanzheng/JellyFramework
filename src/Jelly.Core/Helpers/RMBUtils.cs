@@ -1,4 +1,6 @@
-using System;
+ï»¿using System;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Jelly.Helpers
 {
@@ -7,6 +9,9 @@ namespace Jelly.Helpers
     /// </summary> 
     public static class RMBUtils
     {
+        private readonly static string[] CapitalDigits = { "é›¶", "å£¹", "è´°", "å", "è‚†", "ä¼", "é™†", "æŸ’", "æŒ", "ç–" };
+        private readonly static string CapitalUnits = "ä¸‡ä»Ÿä½°æ‹¾äº¿ä»Ÿä½°æ‹¾ä¸‡ä»Ÿä½°æ‹¾å…ƒè§’åˆ†";
+
         /// <summary> 
         /// Cast lowercase digital to capital CNY.
         /// </summary> 
@@ -14,100 +19,87 @@ namespace Jelly.Helpers
         /// <returns>The capital CNY.</returns>
         public static string ToCapitalCNY(decimal number)
         {
-            if (number < 0)
+            ExceptionManager.ThrowArgumentExceptionIfMeet(number < 0, "The currency number can not be negative.", "number");
+            ExceptionManager.ThrowArgumentExceptionIfMeet(Decimal.Truncate(number).ToString().Length > 13, "The integer number is great than 13 digits", "number");
+
+            // Adjust the currency number two decimal point.
+            decimal fixedNumber = Decimal.Round(number, 2);
+
+            if (fixedNumber == 0M)
             {
-                throw new Exception("The currency number can not be negative.");
+                return "é›¶å…ƒæ•´";
             }
 
-            if (number < 0.01m && number > 0)
+            int index;
+            long money = decimal.ToInt64(fixedNumber * 100);
+            string currency = money.ToString();
+            int len = currency.Length;
+            string actualCapitalUnits = CapitalUnits.Substring(15 - len);
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < len; i++) 
             {
-                throw new Exception("The currency number is less than 0.01 and great than 0, it's too small to cast to Capital CNY.");
-            }
+                index = int.Parse(currency[i].ToString());
 
-            if (number == 0)
-            {
-                return "ÁãÔªÕû";
-            }
-
-            string num;
-            int len;
-            number = Math.Round(number, 2); 
-            num = ((long)(number * 100)).ToString();
-            len = num.Length;     
-
-            if (len > 15)
-            {
-                throw new Exception("The currency number is great than 15 digits, the amount is overflow.");
-            }
-
-            char[] capitalDigits = { 'Áã', 'Ò¼', '·¡', 'Èş', 'ËÁ', 'Îé', 'Â½', 'Æâ', '°Æ', '¾Á' };
-            string capitalUnits = "ÍòÇª°ÛÊ°ÒÚÇª°ÛÊ°ÍòÇª°ÛÊ°Ôª½Ç·Ö";
-            string captialMoney;
-            string actualCapitalUnits = capitalUnits.Substring(15 - len);
-            string[] capitalCNY = actualCapitalUnits.Split();
-            char[] numChar = num.ToCharArray();
-
-            for (int i = 0; i < len; i++)
-            {
-                // In the Fen(·Ö) position.
-                if (i == len - 1)
+                // In â€å…ƒâ€œï¼Œâ€ä¸‡â€œï¼Œâ€äº¿â€œ position.
+                if (len - i == 3 || len - i == 7 || len - i == 11)
                 {
-                    if (numChar[len - 1] == '0')
+                    if (index == 0)
                     {
-                        capitalCNY[i] = String.Empty;
-                        break;
+                        builder.Append(actualCapitalUnits[i]);
                     }
-                }
-
-                // In the Jiao(½Ç) postion.
-                if (i == len - 2)
-                {
-                    if (numChar[len - 2] == '0')
+                    else 
                     {
-                        if (numChar[len - 1] == '0')
-                        {
-                            capitalCNY[i] = String.Empty;
-                        }
-                        else
-                        {
-                            capitalCNY[i] = "Áã";
-                        }
-                        continue;
-                    }
-                }
-
-                // In the yuan(Ôª), ten thousand(Íò),one hundred million(ÒÚ) unit, if number great than 0, add capital digital; 
-                // othwise keep the name of unit.
-                if (i == len - 3 || i == len - 7 || i == len - 11)
-                {
-                    if (numChar[i] != '0')
-                    {
-                        capitalCNY[i] = capitalDigits[numChar[i]] + capitalCNY[i];
+                        builder.Append(CapitalDigits[index] + actualCapitalUnits[i]);                        
                     }
                 }
                 else
                 {
-                    if (numChar[i] != '0')
+                    if (index == 0)
                     {
-                        capitalCNY[i] = capitalDigits[numChar[i]] + capitalCNY[i];
+                        builder.Append(CapitalDigits[index]);
                     }
                     else
                     {
-                        capitalCNY[i] = "Áã";
+                        builder.Append(CapitalDigits[index] + actualCapitalUnits[i]);
                     }
                 }
             }
 
-            captialMoney = String.Join(String.Empty, capitalCNY);
-            captialMoney = captialMoney.Replace("ÁãÁãÁã", "Áã");
-            captialMoney = captialMoney.Replace("ÁãÁã", "Áã");
+            string captialMoney = builder.ToString();
 
-            if (captialMoney.EndsWith("Ôª"))
+            // Merge one more "Zero" to one "Zero";
+            Regex regex = new Regex("é›¶+");
+            captialMoney = regex.Replace(captialMoney, "é›¶");
+
+            // Clean up "é›¶" in preceding â€å…ƒâ€œï¼Œâ€ä¸‡â€œï¼Œâ€äº¿â€œ
+            int yuanIndex = captialMoney.IndexOf("å…ƒ");
+            captialMoney = CleanupZero(captialMoney, yuanIndex);
+
+            int wanIndex = captialMoney.IndexOf("ä¸‡");
+            captialMoney = CleanupZero(captialMoney, wanIndex);
+
+            int yiIndex = captialMoney.IndexOf("äº¿");
+            captialMoney = CleanupZero(captialMoney, yiIndex);
+            
+            // Remove the last two units while the last two are both zero.
+            if (currency.EndsWith("00", StringComparison.OrdinalIgnoreCase)) 
             {
-                captialMoney = captialMoney + "Õû";
+                captialMoney = captialMoney.Remove(captialMoney.IndexOf("å…ƒ") + 1);
+                captialMoney = captialMoney + "æ•´";
             }
 
             return captialMoney;
+        }
+
+        private static string CleanupZero(string input, int index) 
+        {
+            if (index > -1 && input[index - 1].Equals('é›¶'))
+            {
+                input = StringUtils.RemoveSpecifiedIndex(input, index - 1);
+            }
+
+            return input;
         }
     }
 }
