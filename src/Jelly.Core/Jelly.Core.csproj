@@ -58,7 +58,7 @@
     <Compile Include="Caching\ICacheDependency.cs" />
     <Compile Include="Helpers\DateTimeUtils.cs" />
     <Compile Include="Helpers\ExceptionManager.cs" />
-    <Compile Include="Helpers\Formatter.cs" />
+    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\IOUtils.cs" />
     <Compile Include="Encryption\Base64.cs" />
     <Compile Include="Encryption\DES.cs" />
