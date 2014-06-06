@@ -166,38 +166,5 @@ namespace Jelly.Extensions
 
             return input;
         }
-
-        /// <summary>
-        /// Identify the whether the input parameter is last word.
-        /// </summary>
-        /// <param name="input">The input string.</param>
-        /// <param name="lastWord">The last word string.</param>
-        /// <returns>
-        ///     <c>true</c>, the input parameter is match last word, otherwise <c>false</c>.
-        /// </returns>
-        public static bool IsLastWord(this string input, string lastWord)
-        {
-            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
-            ExceptionManager.ThrowArgumentNullExceptionIfNull(lastWord, "lastWord");
-
-            int wordLength = lastWord.Length;
-            return input.LastIndexOf(lastWord) == input.Length - wordLength;
-        }
-
-        /// <summary>
-        /// Identify the whether the input parameter is last word.
-        /// </summary>
-        /// <param name="input">The input string.</param>
-        /// <param name="lastWord">The last word char.</param>
-        /// <returns>
-        ///     <c>true</c>, the input parameter is match last word, otherwise <c>false</c>.
-        /// </returns>
-        public static bool IsLastWord(this string input, char lastWord)
-        {
-            ExceptionManager.ThrowArgumentNullExceptionIfNull(input, "input");
-            ExceptionManager.ThrowArgumentNullExceptionIfNull(lastWord, "lastWord");
-
-            return input.LastIndexOf(lastWord) == input.Length - 1;
-        }
     }
 }

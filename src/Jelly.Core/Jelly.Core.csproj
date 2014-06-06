@@ -56,7 +56,6 @@
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\ICacheManager.cs" />
     <Compile Include="Caching\ICacheDependency.cs" />
-    <Compile Include="Helpers\DateTimeUtils.cs" />
     <Compile Include="Helpers\ExceptionManager.cs" />
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\IOUtils.cs" />

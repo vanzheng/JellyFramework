@@ -46,6 +46,11 @@ namespace Jelly.Helpers
             return fullPath;
         }
 
+        /// <summary>
+        /// Gets full directory name base on current domain base directory.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>The full directory name.</returns>
         public static string GetFullDirectoryName(string path) 
         {
             ExceptionManager.ThrowArgumentNullExceptionIfNull(path);
@@ -80,6 +85,11 @@ namespace Jelly.Helpers
             return path;
         }
 
+        /// <summary>
+        /// Converts stream to bytes.
+        /// </summary>
+        /// <param name="stream">The input stream.</param>
+        /// <returns>The bytes.</returns>
         public static byte[] StreamToBytes(Stream stream)
         {
             byte[] bytes = new byte[stream.Length];

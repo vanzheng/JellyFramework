@@ -10,6 +10,11 @@ namespace Jelly.Helpers
     /// </summary>
     public static class UriUtils
     {
+        /// <summary>
+        /// Builds query string by <see cref="NameValueCollection"/>.
+        /// </summary>
+        /// <param name="queryStrings">The <see cref="NameValueCollection"/> object.</param>
+        /// <returns>The query string.</returns>
         public static string BuildQueryString(NameValueCollection queryStrings)
         {
             StringBuilder builder = new StringBuilder();
@@ -39,13 +44,15 @@ namespace Jelly.Helpers
         /// <summary>
         /// Append url a query delimiter.
         /// </summary>
+        /// <param name="url">The url string.</param>
+        /// <returns>The url end with '?' or '&'.</returns>
         public static string AppendQueryDelimiter(string url)
         {
             ExceptionManager.ThrowArgumentNullExceptionIfNullOrEmpty(url, "url");
 
             if (url.Contains("?"))
             {
-                if (!url.IsLastWord('?') && !url.IsLastWord('&'))
+                if (!url.EndsWith("?") && !url.EndsWith("&"))
                 {
                     url += "&";
                 }
