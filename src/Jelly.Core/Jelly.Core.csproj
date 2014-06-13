@@ -50,7 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CacheItem.cs" />
+    <Compile Include="Caching\CacheItemCollection.cs" />
+    <Compile Include="Caching\FileCacheDependency.cs" />
+    <Compile Include="Caching\NullCacheDependency.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Core\EnumeratorBase.cs" />
+    <Compile Include="Core\ScheduleTimer.cs" />
     <Compile Include="Extensions\DbDataReaderExtension.cs" />
     <Compile Include="Helpers\ArrayUtils.cs" />
     <Compile Include="Caching\CacheManager.cs" />

@@ -1,22 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Jelly.Core;
 
 namespace Jelly.Caching
 {
-    public class CacheManager<TKey, TValue> : ICacheManager<TKey, TValue>
+    public class CacheManager<TKey, TValue> : ScheduleTimer, ICacheManager<TKey, TValue>
     {
         private ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
-        private Dictionary<TKey, TValue> _cache;
+        private CacheItemCollection<TKey, TValue>_collection;
 
         public CacheManager() 
         {
-            this._cache = new Dictionary<TKey, TValue>();    
+            this._collection = new CacheItemCollection<TKey, TValue>();    
         }
 
         public CacheManager(int capacity) 
         {
-            this._cache = new Dictionary<TKey, TValue>(capacity);
+            this._collection = new CacheItemCollection<TKey, TValue>(capacity); 
+        }
+
+        protected override void HandleOnTime()
+        {
+            foreach (TKey key in this._collection.Keys) 
+            {
+                var cacheItem = this._collection.Get(key);
+
+                if (cacheItem != null && cacheItem.CacheDependency.Expired) 
+                {
+                    this._collection.Remove(key);
+                }
+            }
         }
 
         public TValue Get(TKey key) 
@@ -26,19 +40,14 @@ namespace Jelly.Caching
                 throw new ArgumentNullException("key");
             }
 
-            TValue value = default(TValue);
+            var cacheItem = this._collection.Get(key);
 
-            try
+            if (cacheItem != null) 
             {
-                lockSlim.EnterReadLock();
-                this._cache.TryGetValue(key, out value);
+                return cacheItem.Value;
             }
-            finally 
-            {
-                lockSlim.ExitReadLock();
-            }
-
-            return value;
+            
+            return default(TValue);
         }
 
         public void Insert(TKey key, TValue value) 
@@ -48,15 +57,20 @@ namespace Jelly.Caching
                 throw new ArgumentNullException("key");
             }
 
-            try
+            Insert(key, value, new NullCacheDependency());
+        }
+
+        public void Insert(TKey key, TValue value, ICacheDependency cacheDependency)
+        {
+            if (key == null)
             {
-                lockSlim.EnterWriteLock();
-                this._cache[key] = value;
+                throw new ArgumentNullException("key");
             }
-            finally 
-            {
-                lockSlim.ExitWriteLock();
-            }
+
+            var cacheItem = new CacheItem<TKey, TValue>(key, value, cacheDependency);
+            this._collection.Insert(key, cacheItem);
+            
+            base.StartTimer();
         }
 
         public TValue this[TKey key]
@@ -78,36 +92,7 @@ namespace Jelly.Caching
                 throw new ArgumentNullException("key");
             }
 
-            bool result = false;
-            
-            try
-            {
-                lockSlim.EnterReadLock();
-                result = this._cache.ContainsKey(key);
-            }
-            finally 
-            {
-                lockSlim.ExitReadLock();
-            }
-
-            return result;
-        }
-
-        public bool ContainsValue(TValue value)
-        {
-            bool result = false;
-            
-            try
-            {
-                lockSlim.EnterReadLock();
-                result = this._cache.ContainsValue(value);
-            }
-            finally 
-            {
-                lockSlim.ExitReadLock();
-            }
-
-            return result;
+            return this._collection.ContainsKey(key);
         }
 
         public bool Remove(TKey key) 
@@ -117,52 +102,20 @@ namespace Jelly.Caching
                 throw new ArgumentNullException("key");
             }
 
-            bool result = false;
-            
-            try
-            {
-                lockSlim.EnterWriteLock();
-                result = this._cache.Remove(key);
-            }
-            finally 
-            {
-                lockSlim.ExitWriteLock();
-            }
-
-            return result;
+            return this._collection.Remove(key);
         }
 
         public int Count 
         {
             get 
             {
-                int count;
-                
-                try
-                {
-                    lockSlim.EnterReadLock();
-                    count = this._cache.Count;
-                }
-                finally 
-                {
-                    lockSlim.ExitReadLock();
-                }
-
-                return count;
+                return this._collection.Count;
             }
         }
 
         public void Clear() 
         {
-            try
-            {
-                lockSlim.EnterWriteLock();
-                this._cache.Clear();
-            }
-            finally 
-            {
-                lockSlim.ExitWriteLock();
-            }
+            this._collection.Clear();
         }
     }
 }
